@@ -1,23 +1,23 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
+# See https://aka.ms/customizecontainer for customization options.
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER app
+# USER app (Ensure this user has the correct permissions or adjust as necessary)
 WORKDIR /app
-EXPOSE 8080
 EXPOSE 8081
+EXPOSE 8082
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["BackendTraining/BackendTraining.csproj", "BackendTraining/"]
-RUN dotnet restore "./BackendTraining/./BackendTraining.csproj"
+COPY ["BackendTraining.csproj", "./"]
+RUN dotnet restore "BackendTraining.csproj"
+
+# Copy the rest of the source code
 COPY . .
-WORKDIR "/src/BackendTraining"
-RUN dotnet build "./BackendTraining.csproj" -c $BUILD_CONFIGURATION -o /app/build
+# Assuming all necessary files are in /src after 'COPY . .'
+RUN dotnet build "BackendTraining.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./BackendTraining.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "BackendTraining.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
