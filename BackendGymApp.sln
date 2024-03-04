@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackendTraining", "BackendTraining\BackendTraining.csproj", "{D26A1FDC-52EA-4E87-BA19-A4851C3DC6C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymAppTraining.Api", "BackendTraining\GymAppTraining.Api.csproj", "{D26A1FDC-52EA-4E87-BA19-A4851C3DC6C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendDiet", "BackendDiet\BackendDiet.csproj", "{1DE4AB6C-C453-4275-9A4F-F42D04FEBBAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymAppDiet.Api", "BackendDiet\GymAppDiet.Api.csproj", "{1DE4AB6C-C453-4275-9A4F-F42D04FEBBAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymApp.Data", "GymApp.Data\GymApp.Data.csproj", "{D56BD637-CD81-4780-B25E-0121DC0C4D23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymApp.Business", "GymApp.Business\GymApp.Business.csproj", "{E5B6ABD3-65BC-4306-BAD4-A5770DCC90A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{1DE4AB6C-C453-4275-9A4F-F42D04FEBBAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DE4AB6C-C453-4275-9A4F-F42D04FEBBAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DE4AB6C-C453-4275-9A4F-F42D04FEBBAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D56BD637-CD81-4780-B25E-0121DC0C4D23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D56BD637-CD81-4780-B25E-0121DC0C4D23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D56BD637-CD81-4780-B25E-0121DC0C4D23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D56BD637-CD81-4780-B25E-0121DC0C4D23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5B6ABD3-65BC-4306-BAD4-A5770DCC90A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5B6ABD3-65BC-4306-BAD4-A5770DCC90A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5B6ABD3-65BC-4306-BAD4-A5770DCC90A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5B6ABD3-65BC-4306-BAD4-A5770DCC90A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
