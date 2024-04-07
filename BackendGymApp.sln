@@ -7,9 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymAppTraining.Api", "Backe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymAppDiet.Api", "BackendDiet\GymAppDiet.Api.csproj", "{1DE4AB6C-C453-4275-9A4F-F42D04FEBBAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymApp.Data", "GymApp.Data\GymApp.Data.csproj", "{D56BD637-CD81-4780-B25E-0121DC0C4D23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymApp.Data", "GymApp.Data\GymApp.Data.csproj", "{D56BD637-CD81-4780-B25E-0121DC0C4D23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymApp.Business", "GymApp.Business\GymApp.Business.csproj", "{E5B6ABD3-65BC-4306-BAD4-A5770DCC90A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymApp.Business", "GymApp.Business\GymApp.Business.csproj", "{E5B6ABD3-65BC-4306-BAD4-A5770DCC90A8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AB9B4235-FEE0-45B1-B4D9-EB0812A2E484}"
+	ProjectSection(SolutionItems) = preProject
+		OperationResult.cs = OperationResult.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
