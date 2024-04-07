@@ -1,6 +1,6 @@
-# See https://aka.ms/customizecontainer for customization options.
+
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-# USER app (Ensure this user has the correct permissions or adjust as necessary)
+
 WORKDIR /app
 EXPOSE 8083
 EXPOSE 8084
