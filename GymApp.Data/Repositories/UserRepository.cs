@@ -12,7 +12,7 @@ namespace GymApp.Data.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private ITrainingContext _trainingContext;
+        private readonly ITrainingContext _trainingContext;
         public UserRepository(ITrainingContext trainingContext) 
         { 
             _trainingContext = trainingContext;

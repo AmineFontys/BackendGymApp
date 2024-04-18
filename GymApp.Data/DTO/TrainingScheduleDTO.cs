@@ -16,7 +16,7 @@ namespace GymApp.Data.DTO
 
         [ForeignKey(nameof(TrainerID))]
         [DeleteBehavior(DeleteBehavior.NoAction)]
-        public virtual UserDTO? Trainer { get; set; }
+        public virtual UserDto? Trainer { get; set; }
 
         [Required] public Guid TrainerID { get; set; }
 

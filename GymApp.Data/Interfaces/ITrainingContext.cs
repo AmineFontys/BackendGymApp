@@ -9,7 +9,7 @@ namespace GymApp.Data.Interfaces
         DbSet<ExerciseDto> Exercise { get; set; }
         DbSet<TrainingDto> Training { get; set; }
         DbSet<TrainingScheduleDto> TrainingSchedule { get; set; }
-        DbSet<UserDTO> Users { get; set; }
+        DbSet<UserDto> Users { get; set; }
 
 
     }

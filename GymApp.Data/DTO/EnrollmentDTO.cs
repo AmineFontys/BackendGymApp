@@ -18,7 +18,7 @@ namespace GymApp.Data.DTO
 
         [Required] public Guid TrainingID { get; set; }
 
-        [ForeignKey("MemberID")] [Required] public virtual UserDTO? Member { get; set; }
+        [ForeignKey("MemberID")] [Required] public virtual UserDto? Member { get; set; }
 
         [Required] public Guid MemberID { get; set; }
 

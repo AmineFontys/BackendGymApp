@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace GymApp.Data.DTO
 {
     [Table("User")]
-    public class UserDTO
+    public class UserDto
     {
         [Key] [Required] public Guid Id { get; private set; }
 

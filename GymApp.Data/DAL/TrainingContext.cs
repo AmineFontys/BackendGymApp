@@ -17,7 +17,7 @@ namespace GymApp.Data.DAL
         public virtual DbSet<ExerciseDto> Exercise { get; set; }
         public virtual DbSet<TrainingDto> Training { get; set; }
         public virtual DbSet<TrainingScheduleDto> TrainingSchedule { get; set; }
-        public virtual DbSet<UserDTO> Users { get; set; }
+        public virtual DbSet<UserDto> Users { get; set; }
 
         
     }
