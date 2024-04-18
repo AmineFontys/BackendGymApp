@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using GymApp.Data.Entities;
+using GymApp.Data.DTO;
 using GymAppTraining.Api.Models;
+using GymApp.Business.Entities;
 
 namespace GymAppTraining.Api
 {

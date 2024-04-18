@@ -6,18 +6,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GymApp.Data.Entities
+namespace GymApp.Data.DTO
 {
     [Table("Exercise")]
-    public class Exercise
+    public class ExerciseDTO
     {
         [Key] [Required] public Guid ID { get; set; }
 
-        [Required] [StringLength(50)] public string Name { get; set; }
+        [Required] [StringLength(50)] public string? Name { get; set; }
 
-        [Required] [StringLength(50)] public string MuscleGroup { get; set; }
+        [Required] [StringLength(50)] public string? MuscleGroup { get; set; }
 
-        [Required] [StringLength(250)] public string Description { get; set; }
+        [Required] [StringLength(250)] public string? Description { get; set; }
 
         [Required] public uint Reps { get; set; }
 
@@ -29,11 +29,8 @@ namespace GymApp.Data.Entities
 
         [Required] public uint DurationInSeconds { get; set; }
 
-        public virtual ICollection<TrainingSchedule> TrainingSchedules { get; set; } = [];
+        public virtual ICollection<TrainingScheduleDTO> TrainingSchedules { get; set; } = [];
 
-        public Exercise()
-        {
-        }
     }
 
 }

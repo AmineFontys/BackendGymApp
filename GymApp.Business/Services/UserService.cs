@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
+using GymApp.Business.Entities;
 using GymApp.Business.Interfaces;
 using GymApp.Data.Interfaces;
-using GymAppTraining.Api.Models;
 
 namespace GymApp.Business.Services
 {
     public class UserService : IUserService
     {
-        IUserRepository _iUserRepository;
-        IMapper _mapper;
+        private readonly IUserRepository _iUserRepository;
+        private readonly IMapper _mapper;
         public UserService(IUserRepository userRepository, IMapper mapper) 
         {
             _iUserRepository = userRepository;
@@ -22,7 +22,7 @@ namespace GymApp.Business.Services
             {
                 try
                 {
-                    var userModels = _mapper.Map<List<UserModel>>(users);
+                    var userModels = _mapper.Map<List<User>>(users);
                     return new ServiceResponse<dynamic>
                     {
                         Success = true,

@@ -1,6 +1,6 @@
 ﻿
 using GymApp.Data.DAL;
-using GymApp.Data.Entities;
+using GymApp.Data.DTO;
 using GymApp.Data.Interfaces;
 using System;
 using System.Collections.Generic;

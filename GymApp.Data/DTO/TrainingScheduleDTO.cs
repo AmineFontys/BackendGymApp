@@ -7,30 +7,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GymApp.Data.Entities
+namespace GymApp.Data.DTO
 {
     [Table("TrainingSchedule")]
-    public class TrainingSchedule
+    public class TrainingScheduleDTO
     {
         [Key] [Required] public Guid ID { get; set; }
 
         [ForeignKey(nameof(TrainerID))]
         [DeleteBehavior(DeleteBehavior.NoAction)]
-        public virtual User Trainer { get; set; }
+        public virtual UserDTO? Trainer { get; set; }
 
         [Required] public Guid TrainerID { get; set; }
 
         [Required] public uint DurationInMinutes { get; set; }
 
 
-        public virtual ICollection<Exercise?> Exercises { get; set; } = [];
+        public virtual ICollection<ExerciseDTO?> Exercises { get; set; } = [];
 
-
-
-
-        public TrainingSchedule()
-        {
-        }
     }
 
 

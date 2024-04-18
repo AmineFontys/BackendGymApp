@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GymApp.Data.Entities
+namespace GymApp.Data.DTO
 {
     [Table("Training")]
-    public class Training
+    public class TrainingDTO
     {
         [Key] [Required] public Guid ID { get; set; }
 
@@ -18,13 +18,13 @@ namespace GymApp.Data.Entities
 
         [ForeignKey(nameof(TrainerID))]
         [DeleteBehavior(DeleteBehavior.NoAction)]
-        public virtual User Trainer { get; set; }
+        public virtual UserDTO? Trainer { get; set; }
 
         [Required] public Guid TrainingScheduleID { get; set; }
 
         [ForeignKey(nameof(TrainingScheduleID))]
         [DeleteBehavior(DeleteBehavior.NoAction)]
-        public virtual TrainingSchedule TrainingSchedule { get; set; }
+        public virtual TrainingScheduleDTO? TrainingSchedule { get; set; }
 
         [Required] public DateTime Time { get; set; }
 
@@ -32,8 +32,5 @@ namespace GymApp.Data.Entities
 
         public uint CurrentParticipants { get; set; }
 
-        public Training()
-        {
-        }
     }
 }
