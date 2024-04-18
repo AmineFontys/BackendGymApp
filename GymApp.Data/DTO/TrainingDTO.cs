@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace GymApp.Data.DTO
 {
     [Table("Training")]
-    public class TrainingDTO
+    public class TrainingDto
     {
         [Key] [Required] public Guid ID { get; set; }
 
@@ -24,7 +24,7 @@ namespace GymApp.Data.DTO
 
         [ForeignKey(nameof(TrainingScheduleID))]
         [DeleteBehavior(DeleteBehavior.NoAction)]
-        public virtual TrainingScheduleDTO? TrainingSchedule { get; set; }
+        public virtual TrainingScheduleDto? TrainingSchedule { get; set; }
 
         [Required] public DateTime Time { get; set; }
 

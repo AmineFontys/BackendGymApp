@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace GymApp.Data.DTO
 {
     [Table("Exercise")]
-    public class ExerciseDTO
+    public class ExerciseDto
     {
         [Key] [Required] public Guid ID { get; set; }
 
@@ -29,7 +29,7 @@ namespace GymApp.Data.DTO
 
         [Required] public uint DurationInSeconds { get; set; }
 
-        public virtual ICollection<TrainingScheduleDTO> TrainingSchedules { get; set; } = [];
+        public virtual ICollection<TrainingScheduleDto> TrainingSchedules { get; set; } = [];
 
     }
 

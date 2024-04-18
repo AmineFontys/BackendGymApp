@@ -10,11 +10,11 @@ using Microsoft.EntityFrameworkCore;
 namespace GymApp.Data.DTO
 {
     [Table("Enrollments")]
-    public class EnrollmentDTO
+    public class EnrollmentDto
     {
         [Key] [Required] public Guid ID { get; set; }
 
-        [ForeignKey("TrainingID")] [Required] public virtual TrainingDTO? Training { get; set; }
+        [ForeignKey("TrainingID")] [Required] public virtual TrainingDto? Training { get; set; }
 
         [Required] public Guid TrainingID { get; set; }
 

@@ -5,10 +5,10 @@ namespace GymApp.Data.Interfaces
 {
     public interface ITrainingContext: IDisposable
     {
-        DbSet<EnrollmentDTO> Enrollments { get; set; }
-        DbSet<ExerciseDTO> Exercise { get; set; }
-        DbSet<TrainingDTO> Training { get; set; }
-        DbSet<TrainingScheduleDTO> TrainingSchedule { get; set; }
+        DbSet<EnrollmentDto> Enrollments { get; set; }
+        DbSet<ExerciseDto> Exercise { get; set; }
+        DbSet<TrainingDto> Training { get; set; }
+        DbSet<TrainingScheduleDto> TrainingSchedule { get; set; }
         DbSet<UserDTO> Users { get; set; }
 
 

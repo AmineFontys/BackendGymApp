@@ -13,10 +13,10 @@ namespace GymApp.Data.DAL
             Database.EnsureCreated();
         }
 
-        public virtual DbSet<EnrollmentDTO> Enrollments { get; set; }
-        public virtual DbSet<ExerciseDTO> Exercise { get; set; }
-        public virtual DbSet<TrainingDTO> Training { get; set; }
-        public virtual DbSet<TrainingScheduleDTO> TrainingSchedule { get; set; }
+        public virtual DbSet<EnrollmentDto> Enrollments { get; set; }
+        public virtual DbSet<ExerciseDto> Exercise { get; set; }
+        public virtual DbSet<TrainingDto> Training { get; set; }
+        public virtual DbSet<TrainingScheduleDto> TrainingSchedule { get; set; }
         public virtual DbSet<UserDTO> Users { get; set; }
 
         
