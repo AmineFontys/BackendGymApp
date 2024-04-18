@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using GymApp.Data.Entities;
 using GymApp.Data.Interfaces;
+using GymApp.Data.DTO;
 
 namespace GymApp.Data.DAL
 {
@@ -13,11 +13,11 @@ namespace GymApp.Data.DAL
             Database.EnsureCreated();
         }
 
-        public virtual DbSet<Enrollment> Enrollments { get; set; }
-        public virtual DbSet<Exercise> Exercise { get; set; }
-        public virtual DbSet<Training> Training { get; set; }
-        public virtual DbSet<TrainingSchedule> TrainingSchedule { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<EnrollmentDTO> Enrollments { get; set; }
+        public virtual DbSet<ExerciseDTO> Exercise { get; set; }
+        public virtual DbSet<TrainingDTO> Training { get; set; }
+        public virtual DbSet<TrainingScheduleDTO> TrainingSchedule { get; set; }
+        public virtual DbSet<UserDTO> Users { get; set; }
 
         
     }
