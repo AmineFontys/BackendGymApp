@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GymApp.Business
+namespace GymApp.Data.Repositories
 {
-    public class ServiceResponse<T>
+    public class RepositoryResponse<T>
     {
         public bool Success { get; set; } = true;
         public string? Message { get; set; }

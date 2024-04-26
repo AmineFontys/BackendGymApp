@@ -1,4 +1,5 @@
 ﻿using GymApp.Data.DTO;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,15 +10,15 @@ using System.Threading.Tasks;
 
 namespace GymApp.Business.Entities
 {
-    public class Enrollment
+    public class TrainingSchedule
     {
         public Guid ID { get; set; }
+                
+        public virtual User? Trainer { get; set; }
 
-        public virtual Training? Training { get; set; }
+        public uint DurationInMinutes { get; set; }
 
-        public virtual User? Member { get; set; }
 
-        public bool EnrollmentCanceled { get; set; }
-
+        public virtual ICollection<Exercise?> Exercises { get; set; } = [];
     }
 }

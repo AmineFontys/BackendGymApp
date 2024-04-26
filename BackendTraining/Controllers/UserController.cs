@@ -1,4 +1,5 @@
-﻿using GymApp.Business.Interfaces;
+﻿using GymAppTraining.Api.Models;
+using GymAppTraining.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -15,6 +16,7 @@ namespace GymAppTraining.Api.Controllers
             _iuserService = iuserService;
         }
 
+
         [HttpGet]
         public IActionResult GetAll() 
         {
@@ -29,6 +31,22 @@ namespace GymAppTraining.Api.Controllers
                 return BadRequest(result.Message);
             }
         }
-        
+
+        [HttpPost]
+        public IActionResult Add(AddUserModel user)
+        {
+            var result = _iuserService.AddUser(user);
+
+            if (result.Success)
+            {
+                return Ok(result.Message);
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
+        }
+
+
     }
 }

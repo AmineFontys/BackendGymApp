@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymAppDiet.Api", "BackendDi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymApp.Data", "GymApp.Data\GymApp.Data.csproj", "{D56BD637-CD81-4780-B25E-0121DC0C4D23}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymApp.Business", "GymApp.Business\GymApp.Business.csproj", "{E5B6ABD3-65BC-4306-BAD4-A5770DCC90A8}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AB9B4235-FEE0-45B1-B4D9-EB0812A2E484}"
 	ProjectSection(SolutionItems) = preProject
 		OperationResult.cs = OperationResult.cs
@@ -34,10 +32,6 @@ Global
 		{D56BD637-CD81-4780-B25E-0121DC0C4D23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D56BD637-CD81-4780-B25E-0121DC0C4D23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D56BD637-CD81-4780-B25E-0121DC0C4D23}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E5B6ABD3-65BC-4306-BAD4-A5770DCC90A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E5B6ABD3-65BC-4306-BAD4-A5770DCC90A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E5B6ABD3-65BC-4306-BAD4-A5770DCC90A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E5B6ABD3-65BC-4306-BAD4-A5770DCC90A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

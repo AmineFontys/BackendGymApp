@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using GymApp.Business.Entities;
-using GymApp.Business.Interfaces;
-using GymApp.Data.DTO;
+using GymApp.Data.Entities;
 using GymApp.Data.Interfaces;
+using GymAppTraining.Api.Models;
+using GymAppTraining.Interfaces;
 
-namespace GymApp.Business.Services
+namespace GymAppTraining.Api.Services
 {
     public class UserService : IUserService
     {
@@ -23,7 +23,7 @@ namespace GymApp.Business.Services
             {
                 try
                 {
-                    var userModels = _mapper.Map<List<UserDto>>(users);
+                    var userModels = _mapper.Map<List<User>>(users);
                     return new ServiceResponse<dynamic>
                     {
                         Success = true,
@@ -55,9 +55,9 @@ namespace GymApp.Business.Services
 
             
         }
-        public ServiceResponse<dynamic> AddUser( user)
+        public ServiceResponse<dynamic> AddUser(AddUserModel user)
         {
-            var userEntity = _mapper.Map<UserDto>(user);
+            var userEntity = _mapper.Map<User>(user);
             var result = _iUserRepository.AddUser(userEntity);
             if (result.Success)
             {

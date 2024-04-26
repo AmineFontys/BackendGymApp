@@ -2,10 +2,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace GymApp.Data.DTO
+namespace GymApp.Data.Entities
 {
     [Table("User")]
-    public class UserDto
+    public class User
     {
         [Key] [Required] public Guid Id { get; private set; }
 
@@ -15,7 +15,7 @@ namespace GymApp.Data.DTO
 
         [Required] public DateTime Birthdate { get; private set; }
 
-        public bool IsMale { get; private set; }
+        [Required] public bool IsMale { get; private set; }
 
         [Required] [MaxLength(50)] public string? PhoneNumber { get; private set; }
 
@@ -24,7 +24,7 @@ namespace GymApp.Data.DTO
         [MaxLength(100)]
         public string? Email { get; private set; }
 
-        [Required] [MaxLength(200)] public string? PasswordHash { get; private set; }
+        public string? PasswordHash { get; private set; }
 
         [Required] public UserRole Role { get; private set; }
 

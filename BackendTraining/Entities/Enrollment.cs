@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GymApp.Business.Entities
+namespace GymAppTraining.Api.Entities
 {
     public class Enrollment
     {

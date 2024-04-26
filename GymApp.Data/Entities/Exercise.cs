@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GymApp.Data.DTO
+namespace GymApp.Data.Entities
 {
     [Table("Exercise")]
-    public class ExerciseDto
+    public class Exercise
     {
         [Key] [Required] public Guid ID { get; set; }
 
@@ -29,7 +29,7 @@ namespace GymApp.Data.DTO
 
         [Required] public uint DurationInSeconds { get; set; }
 
-        public virtual ICollection<TrainingScheduleDto> TrainingSchedules { get; set; } = [];
+        public virtual ICollection<TrainingSchedule> TrainingSchedules { get; set; } = [];
 
     }
 

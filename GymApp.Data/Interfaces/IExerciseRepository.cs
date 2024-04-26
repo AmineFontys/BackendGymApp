@@ -1,5 +1,4 @@
-﻿
-using GymApp.Data.Entities;
+﻿using GymApp.Data.Entities;
 using GymApp.Data.Repositories;
 using System;
 using System.Collections.Generic;
@@ -9,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace GymApp.Data.Interfaces
 {
-    public interface IUserRepository
+    public interface IExerciseRepository
     {
-       RepositoryResponse<dynamic> GetAllUsers();
-       RepositoryResponse<dynamic> AddUser(User user);
+        RepositoryResponse<dynamic> GetAllExercises();
+        RepositoryResponse<dynamic> AddExercise(Exercise exercise);
+
     }
 }

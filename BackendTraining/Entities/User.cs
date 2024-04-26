@@ -1,6 +1,13 @@
-﻿namespace GymAppTraining.Api.Models
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GymApp.Business.Entities
 {
-    public class UserModel
+    public class User
     {
         public Guid Id { get; private set; }
 
@@ -20,13 +27,13 @@
 
         public UserRole Role { get; private set; }
 
+
         public enum UserRole
         {
             Admin,
             Trainer,
             Member,
-        }
 
-        public UserModel() { }
+        }
     }
 }

@@ -1,6 +1,4 @@
-﻿
-using GymApp.Data.DAL;
-using GymApp.Data.Entities;
+﻿using GymApp.Data.Entities;
 using GymApp.Data.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,28 +8,28 @@ using System.Threading.Tasks;
 
 namespace GymApp.Data.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class ExerciseRepository: IExerciseRepository
     {
         private readonly ITrainingContext _trainingContext;
-        public UserRepository(ITrainingContext trainingContext) 
-        { 
+        public ExerciseRepository(ITrainingContext trainingContext)
+        {
             _trainingContext = trainingContext;
         }
 
-        public RepositoryResponse<dynamic> GetAllUsers() 
+        public RepositoryResponse<dynamic> GetAllExercises()
         {
             try
             {
-                var users = _trainingContext.Users.ToList();
+                var exercises = _trainingContext.Exercises.ToList();
 
                 return new RepositoryResponse<dynamic>
                 {
                     Success = true,
-                    Data = users
+                    Data = exercises
                 };
-                
+
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
 
                 return new RepositoryResponse<dynamic>
@@ -41,19 +39,20 @@ namespace GymApp.Data.Repositories
                     Message = ex.Message
                 };
             }
-                 
+
         }
-        public RepositoryResponse<dynamic> AddUser(User user)
+
+        public RepositoryResponse<dynamic> AddExercise(Exercise exercise)
         {
             try
             {
-                _trainingContext.Users.Add(user);
+                _trainingContext.Exercises.Add(exercise);
                 _trainingContext.SaveChanges();
 
                 return new RepositoryResponse<dynamic>
                 {
                     Success = true,
-                    Message = "User added successfully"
+                    Message = "Exercise added successfully"
                 };
             }
             catch (Exception ex)

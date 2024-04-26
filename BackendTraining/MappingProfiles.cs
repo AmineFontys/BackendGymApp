@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using GymApp.Data.DTO;
+using GymApp.Data.Entities;
 using GymAppTraining.Api.Models;
-using GymApp.Business.Entities;
 
 namespace GymAppTraining.Api
 {
@@ -9,7 +8,12 @@ namespace GymAppTraining.Api
     {
         public MappingProfiles()
         {
-            CreateMap<User, UserModel>();
+            CreateMap<User, AddUserModel>();
+            CreateMap<AddUserModel, User>();
+            
+
+
+
         }
     }
 }

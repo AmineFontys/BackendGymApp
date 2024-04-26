@@ -1,5 +1,8 @@
 using GymApp.Data.DAL;
 using GymApp.Data.Interfaces;
+using GymApp.Data.Repositories;
+using GymAppTraining.Api.Services;
+using GymAppTraining.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackendTraining
@@ -46,7 +49,13 @@ namespace BackendTraining
 
         private static void RegisterInterfaces(WebApplicationBuilder builder)
         {
+            builder.Services.AddAutoMapper(typeof(Program).Assembly);  // Adjust the assembly if your profiles are elsewhere
+
             builder.Services.AddScoped<ITrainingContext, TrainingContext>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUserService, UserService>();
+            
+
         }
     }
 }

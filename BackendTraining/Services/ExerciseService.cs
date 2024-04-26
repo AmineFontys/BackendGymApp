@@ -1,70 +1,66 @@
 ﻿using AutoMapper;
-using GymApp.Business.Entities;
-using GymApp.Business.Interfaces;
-using GymApp.Data.DTO;
+using GymApp.Data.Entities;
 using GymApp.Data.Interfaces;
+using GymAppTraining.Api.Interfaces;
+using GymAppTraining.Api.Models;
 
-namespace GymApp.Business.Services
+namespace GymAppTraining.Api.Services
 {
-    public class UserService : IUserService
+    public class ExerciseService : IExerciseService
     {
-        private readonly IUserRepository _iUserRepository;
+        private readonly IExerciseRepository _iExerciseRepository;
         private readonly IMapper _mapper;
-        public UserService(IUserRepository userRepository, IMapper mapper) 
+
+        public ExerciseService(IExerciseRepository exerciseRepository, IMapper mapper)
         {
-            _iUserRepository = userRepository;
+            _iExerciseRepository = exerciseRepository;
             _mapper = mapper;
         }
 
-        public ServiceResponse<dynamic> GetAllUsers()
+        public ServiceResponse<dynamic> GetAllExercises()
         {
-            var users = _iUserRepository.GetAllUsers();
-            if (users.Success)
+            var exercises = _iExerciseRepository.GetAllExercises();
+            if (exercises.Success)
             {
                 try
                 {
-                    var userModels = _mapper.Map<List<UserDto>>(users);
                     return new ServiceResponse<dynamic>
                     {
                         Success = true,
-                        Data = userModels
+                        Data = exercises.Data
                     };
                 }
-                catch (Exception ex) 
+                catch (System.Exception ex)
                 {
                     return new ServiceResponse<dynamic>
                     {
                         Success = false,
                         Data = ex,
                         Message = ex.Message
-
                     };
                 }
-
             }
             else
             {
                 return new ServiceResponse<dynamic>
                 {
                     Success = false,
-                    Data = users.Data,
-                    Message = users.Message
-
+                    Data = exercises.Data,
+                    Message = exercises.Message
                 };
             }
-
-            
         }
-        public ServiceResponse<dynamic> AddUser( user)
+
+        public ServiceResponse<dynamic> AddExercise(AddExerciseModel exercise)
         {
-            var userEntity = _mapper.Map<UserDto>(user);
-            var result = _iUserRepository.AddUser(userEntity);
-            if (result.Success)
+            var exerciseEntity = _mapper.Map<Exercise>(exercise);
+            var response = _iExerciseRepository.AddExercise(exerciseEntity);
+            if (response.Success)
             {
                 return new ServiceResponse<dynamic>
                 {
                     Success = true,
-                    Message = "User added successfully"
+                    Data = response.Data
                 };
             }
             else
@@ -72,10 +68,10 @@ namespace GymApp.Business.Services
                 return new ServiceResponse<dynamic>
                 {
                     Success = false,
-                    Message = result.Message
+                    Data = response.Data,
+                    Message = response.Message
                 };
             }
-        }   
-
+        }
     }
 }
