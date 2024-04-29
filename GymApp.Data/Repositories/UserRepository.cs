@@ -19,20 +19,9 @@ namespace GymApp.Data.Repositories
             _trainingContext = trainingContext;
         }
 
-        private RepositoryResponse<dynamic> CreateResponse(bool success, dynamic? data, string? message = null)
-        {
-            return new RepositoryResponse<dynamic>
-            {
-                Success = success,
-                Data = data,
-                Message = message
-            };
-        }
+        private static RepositoryResponse<dynamic> CreateResponse(bool success, dynamic? data, string? message = null) => new RepositoryResponse<dynamic> { Success = success, Data = data, Message = message };
+        private static RepositoryResponse<dynamic> HandleException(Exception ex) => CreateResponse(false, ex, ex.Message);
 
-        private RepositoryResponse<dynamic> HandleException(Exception ex)
-        {
-            return CreateResponse(false, ex, ex.Message);
-        }
 
         public RepositoryResponse<dynamic> GetAllUsers()
         {

@@ -18,9 +18,9 @@ namespace GymAppTraining.Api.Services
             _mapper = mapper;
         }
 
-        private ServiceResponse<dynamic> CreateResponse(bool success, dynamic data, string message) => new ServiceResponse<dynamic> { Success = success, Data = data, Message = message };
+        private static ServiceResponse<dynamic> CreateResponse(bool success, dynamic data, string message) => new ServiceResponse<dynamic> { Success = success, Data = data, Message = message };
 
-        private ServiceResponse<dynamic> HandleResponse(RepositoryResponse<dynamic> response) => CreateResponse(response.Success, response.Data, response.Message);
+        private static ServiceResponse<dynamic> HandleResponse(RepositoryResponse<dynamic> response) => CreateResponse(response.Success, response.Data, response.Message);
 
         public ServiceResponse<dynamic> GetAllEnrollments() => HandleResponse(_iEnrollmentRepository.GetAllEnrollments());
 
