@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GymApp.Data.Entities;
 using GymApp.Data.Interfaces;
+using GymApp.Data.Repositories;
 using GymAppTraining.Api.Models;
 using GymAppTraining.Interfaces;
 
@@ -10,72 +11,25 @@ namespace GymAppTraining.Api.Services
     {
         private readonly IUserRepository _iUserRepository;
         private readonly IMapper _mapper;
-        public UserService(IUserRepository userRepository, IMapper mapper) 
+
+        public UserService(IUserRepository iuserRepository, IMapper mapper)
         {
-            _iUserRepository = userRepository;
+            _iUserRepository = iuserRepository;
             _mapper = mapper;
         }
 
-        public ServiceResponse<dynamic> GetAllUsers()
-        {
-            var users = _iUserRepository.GetAllUsers();
-            if (users.Success)
-            {
-                try
-                {
-                    var userModels = _mapper.Map<List<User>>(users);
-                    return new ServiceResponse<dynamic>
-                    {
-                        Success = true,
-                        Data = userModels
-                    };
-                }
-                catch (Exception ex) 
-                {
-                    return new ServiceResponse<dynamic>
-                    {
-                        Success = false,
-                        Data = ex,
-                        Message = ex.Message
+        private ServiceResponse<dynamic> CreateResponse(bool success, dynamic data, string message) => new ServiceResponse<dynamic> { Success = success, Data = data, Message = message };
 
-                    };
-                }
+        private ServiceResponse<dynamic> HandleResponse(RepositoryResponse<dynamic> response) => CreateResponse(response.Success, response.Data, response.Message);
 
-            }
-            else
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = false,
-                    Data = users.Data,
-                    Message = users.Message
+        public ServiceResponse<dynamic> GetAllUsers() => HandleResponse(_iUserRepository.GetAllUsers());
 
-                };
-            }
+        public ServiceResponse<dynamic> AddUser(AddUserModel user) => HandleResponse(_iUserRepository.AddUser(_mapper.Map<User>(user)));
 
-            
-        }
-        public ServiceResponse<dynamic> AddUser(AddUserModel user)
-        {
-            var userEntity = _mapper.Map<User>(user);
-            var result = _iUserRepository.AddUser(userEntity);
-            if (result.Success)
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = true,
-                    Message = "User added successfully"
-                };
-            }
-            else
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = false,
-                    Message = result.Message
-                };
-            }
-        }   
+        public ServiceResponse<dynamic> UpdateUser(UpdateUserModel user) => HandleResponse(_iUserRepository.UpdateUser(_mapper.Map<User>(user)));
 
+        public ServiceResponse<dynamic> DeleteUser(Guid id) => HandleResponse(_iUserRepository.DeleteUser(id));
+
+        public ServiceResponse<dynamic> GetUserById(Guid id) => HandleResponse(_iUserRepository.GetUserById(id));
     }
 }

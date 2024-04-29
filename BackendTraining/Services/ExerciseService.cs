@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GymApp.Data.Entities;
 using GymApp.Data.Interfaces;
+using GymApp.Data.Repositories;
 using GymAppTraining.Api.Interfaces;
 using GymAppTraining.Api.Models;
 
@@ -17,61 +18,18 @@ namespace GymAppTraining.Api.Services
             _mapper = mapper;
         }
 
-        public ServiceResponse<dynamic> GetAllExercises()
-        {
-            var exercises = _iExerciseRepository.GetAllExercises();
-            if (exercises.Success)
-            {
-                try
-                {
-                    return new ServiceResponse<dynamic>
-                    {
-                        Success = true,
-                        Data = exercises.Data
-                    };
-                }
-                catch (System.Exception ex)
-                {
-                    return new ServiceResponse<dynamic>
-                    {
-                        Success = false,
-                        Data = ex,
-                        Message = ex.Message
-                    };
-                }
-            }
-            else
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = false,
-                    Data = exercises.Data,
-                    Message = exercises.Message
-                };
-            }
-        }
+        private ServiceResponse<dynamic> CreateResponse(bool success, dynamic data, string message) => new ServiceResponse<dynamic> { Success = success, Data = data, Message = message };
 
-        public ServiceResponse<dynamic> AddExercise(AddExerciseModel exercise)
-        {
-            var exerciseEntity = _mapper.Map<Exercise>(exercise);
-            var response = _iExerciseRepository.AddExercise(exerciseEntity);
-            if (response.Success)
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = true,
-                    Data = response.Data
-                };
-            }
-            else
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = false,
-                    Data = response.Data,
-                    Message = response.Message
-                };
-            }
-        }
+        private ServiceResponse<dynamic> HandleResponse(RepositoryResponse<dynamic> response) => CreateResponse(response.Success, response.Data, response.Message);
+
+        public ServiceResponse<dynamic> GetAllExercises() => HandleResponse(_iExerciseRepository.GetAllExercises());
+
+        public ServiceResponse<dynamic> AddExercise(AddExerciseModel exercise) => HandleResponse(_iExerciseRepository.AddExercise(_mapper.Map<Exercise>(exercise)));
+
+        public ServiceResponse<dynamic> GetExerciseById(Guid id) => HandleResponse(_iExerciseRepository.GetExerciseById(id));
+
+        public ServiceResponse<dynamic> UpdateExercise(UpdateExerciseModel exercise) => HandleResponse(_iExerciseRepository.UpdateExercise(_mapper.Map<Exercise>(exercise)));
+
+        public ServiceResponse<dynamic> DeleteExercise(Guid id) => HandleResponse(_iExerciseRepository.DeleteExercise(id));
     }
 }

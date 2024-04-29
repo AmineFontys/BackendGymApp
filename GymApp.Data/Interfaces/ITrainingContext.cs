@@ -1,5 +1,6 @@
 ﻿using GymApp.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace GymApp.Data.Interfaces
 {
@@ -12,6 +13,8 @@ namespace GymApp.Data.Interfaces
         DbSet<User> Users { get; set; }
 
         int SaveChanges();
+
+        EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
 
 
 

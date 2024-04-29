@@ -17,145 +17,18 @@ namespace GymAppTraining.Api.Services
             _mapper = mapper;
         }
 
+        private ServiceResponse<dynamic> CreateResponse(bool success, dynamic data, string message) => new ServiceResponse<dynamic> { Success = success, Data = data, Message = message };
 
-        public ServiceResponse<dynamic> AddTraining(AddTrainingScheduleModel training)
-        {
-            var trainingEntity = _mapper.Map<Training>(training);
-            var response = _iTrainingRepository.AddTraining(trainingEntity);
-            if (response.Success)
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = true,
-                    Data = response.Data
-                };
-            }
-            else
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = false,
-                    Data = response.Data,
-                    Message = response.Message
-                };
-            }
-        }
+        private ServiceResponse<dynamic> HandleResponse(RepositoryResponse<dynamic> response) => CreateResponse(response.Success, response.Data, response.Message);
 
-        public ServiceResponse<dynamic> DeleteTraining(int id)
-        {
-            var response = _iTrainingRepository.DeleteTraining(id);
-            if (response.Success)
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = true,
-                    Data = response.Data
-                };
-            }
-            else
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = false,
-                    Data = response.Data,
-                    Message = response.Message
-                };
-            }
-        }
+        public ServiceResponse<dynamic> AddTraining(AddTrainingModel training) => HandleResponse(_iTrainingRepository.AddTraining(_mapper.Map<Training>(training)));
+        
+        public ServiceResponse<dynamic> DeleteTraining(Guid id) => HandleResponse(_iTrainingRepository.DeleteTraining(id));
 
-        public ServiceResponse<dynamic> GetAllTrainings()
-        {
-            var trainings = _iTrainingRepository.GetAllTrainings();
-            if (trainings.Success)
-            {
-                try
-                {
-                    return new ServiceResponse<dynamic>
-                    {
-                        Success = true,
-                        Data = trainings.Data
-                    };
-                }
-                catch (System.Exception ex)
-                {
-                    return new ServiceResponse<dynamic>
-                    {
-                        Success = false,
-                        Data = ex,
-                        Message = ex.Message
-                    };
-                }
-            }
-            else
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = false,
-                    Data = trainings.Data,
-                    Message = trainings.Message
-                };
-            }
-        }
+        public ServiceResponse<dynamic> GetAllTrainings() => HandleResponse(_iTrainingRepository.GetAllTrainings());
 
-        public ServiceResponse<dynamic> GetTrainingById(int id)
-        {
-            var training = _iTrainingRepository.GetTrainingById(id);
-            if (training.Success)
-            {
-                try
-                {
-                    return new ServiceResponse<dynamic>
-                    {
-                        Success = true,
-                        Data = training.Data
-                    };
-                }
-                catch (System.Exception ex)
-                {
-                    return new ServiceResponse<dynamic>
-                    {
-                        Success = false,
-                        Data = ex,
-                        Message = ex.Message
-                    };
-                }
-            }
-            else
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = false,
-                    Data = training.Data,
-                    Message = training.Message
-                };
-            }
-        }
+        public ServiceResponse<dynamic> GetTrainingById(Guid id) => HandleResponse(_iTrainingRepository.GetTrainingById(id));
 
-        public ServiceResponse<dynamic> UpdateTraining(UpdateTrainingModel training)
-        {
-            var trainingEntity = _mapper.Map<Training>(training);
-            var response = _iTrainingRepository.UpdateTraining(trainingEntity);
-            if (response.Success)
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = true,
-                    Data = response.Data
-                };
-            }
-            else
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = false,
-                    Data = response.Data,
-                    Message = response.Message
-                };
-            }
-        }
-
-
-
-
+        public ServiceResponse<dynamic> UpdateTraining(UpdateTrainingModel training) => HandleResponse(_iTrainingRepository.UpdateTraining(_mapper.Map<Training>(training)));
     }
 }

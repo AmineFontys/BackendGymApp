@@ -8,12 +8,28 @@ using System.Threading.Tasks;
 
 namespace GymApp.Data.Repositories
 {
-    public class ExerciseRepository: IExerciseRepository
+    public class ExerciseRepository : IExerciseRepository
     {
         private readonly ITrainingContext _trainingContext;
+
         public ExerciseRepository(ITrainingContext trainingContext)
         {
             _trainingContext = trainingContext;
+        }
+
+        private RepositoryResponse<dynamic> CreateResponse(bool success, dynamic? data, string? message = null)
+        {
+            return new RepositoryResponse<dynamic>
+            {
+                Success = success,
+                Data = data,
+                Message = message
+            };
+        }
+
+        private RepositoryResponse<dynamic> HandleException(Exception ex)
+        {
+            return CreateResponse(false, ex, ex.Message);
         }
 
         public RepositoryResponse<dynamic> GetAllExercises()
@@ -22,24 +38,12 @@ namespace GymApp.Data.Repositories
             {
                 var exercises = _trainingContext.Exercises.ToList();
 
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = true,
-                    Data = exercises
-                };
-
+                return CreateResponse(true, exercises);
             }
             catch (Exception ex)
             {
-
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = false,
-                    Data = ex,
-                    Message = ex.Message
-                };
+                return HandleException(ex);
             }
-
         }
 
         public RepositoryResponse<dynamic> AddExercise(Exercise exercise)
@@ -49,20 +53,61 @@ namespace GymApp.Data.Repositories
                 _trainingContext.Exercises.Add(exercise);
                 _trainingContext.SaveChanges();
 
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = true,
-                    Message = "Exercise added successfully"
-                };
+                return CreateResponse(true, null, "Exercise added successfully");
             }
             catch (Exception ex)
             {
-                return new RepositoryResponse<dynamic>
+                return HandleException(ex);
+            }
+        }
+
+        public RepositoryResponse<dynamic> DeleteExercise(Guid id)
+        {
+            try
+            {
+                var exercise = _trainingContext.Exercises.Find(id);
+                if (exercise == null)
                 {
-                    Success = false,
-                    Data = ex,
-                    Message = ex.Message
-                };
+                    return CreateResponse(false, null, "Exercise not found");
+                }
+                _trainingContext.Exercises.Remove(exercise);
+                _trainingContext.SaveChanges();
+                return CreateResponse(true, exercise);
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
+        }
+
+        public RepositoryResponse<dynamic> GetExerciseById(Guid id)
+        {
+            try
+            {
+                var exercise = _trainingContext.Exercises.Find(id);
+                if (exercise == null)
+                {
+                    return CreateResponse(false, null, "Exercise not found");
+                }
+                return CreateResponse(true, exercise);
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
+        }
+
+        public RepositoryResponse<dynamic> UpdateExercise(Exercise exercise)
+        {
+            try
+            {
+                _trainingContext.Exercises.Update(exercise);
+                _trainingContext.SaveChanges();
+                return CreateResponse(true, exercise);
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
             }
         }
     }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GymApp.Data.Repositories
 {
-    public class TrainingRepository: ITrainingRepository
+    public class TrainingRepository : ITrainingRepository
     {
         private readonly ITrainingContext _trainingContext;
 
@@ -17,59 +17,51 @@ namespace GymApp.Data.Repositories
             _trainingContext = trainingContext;
         }
 
+        private RepositoryResponse<dynamic> CreateResponse(bool success, dynamic? data, string? message = null)
+        {
+            return new RepositoryResponse<dynamic>
+            {
+                Success = success,
+                Data = data,
+                Message = message
+            };
+        }
+
+        private RepositoryResponse<dynamic> HandleException(Exception ex)
+        {
+            return CreateResponse(false, ex, ex.Message);
+        }
+
         public RepositoryResponse<dynamic> AddTraining(Training training)
         {
             try
             {
                 _trainingContext.Trainings.Add(training);
                 _trainingContext.SaveChanges();
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = true,
-                    Data = training
-                };
+                return CreateResponse(true, training);
             }
             catch (Exception ex)
             {
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = false,
-                    Data = ex,
-                    Message = ex.Message
-                };
+                return HandleException(ex);
             }
         }
 
-        public RepositoryResponse<dynamic> DeleteTraining(int id)
+        public RepositoryResponse<dynamic> DeleteTraining(Guid id)
         {
             try
             {
                 var training = _trainingContext.Trainings.Find(id);
                 if (training == null)
                 {
-                    return new RepositoryResponse<dynamic>
-                    {
-                        Success = false,
-                        Data = null,
-                        Message = "Training not found"
-                    };
+                    return CreateResponse(false, null, "Training not found");
                 }
                 _trainingContext.Trainings.Remove(training);
                 _trainingContext.SaveChanges();
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = true,
-                    Data = training
-                };
+                return CreateResponse(true, training);
             }
             catch (Exception ex)
             {
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = false,
-                    Data = ex,
-                    Message = ex.Message
-                };
+                return HandleException(ex);
             }
         }
 
@@ -78,51 +70,28 @@ namespace GymApp.Data.Repositories
             try
             {
                 var trainings = _trainingContext.Trainings.ToList();
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = true,
-                    Data = trainings
-                };
+                return CreateResponse(true, trainings);
             }
             catch (Exception ex)
             {
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = false,
-                    Data = ex,
-                    Message = ex.Message
-                };
+                return HandleException(ex);
             }
         }
 
-        public RepositoryResponse<dynamic> GetTrainingById(int id)
+        public RepositoryResponse<dynamic> GetTrainingById(Guid id)
         {
             try
             {
                 var training = _trainingContext.Trainings.Find(id);
                 if (training == null)
                 {
-                    return new RepositoryResponse<dynamic>
-                    {
-                        Success = false,
-                        Data = null,
-                        Message = "Training not found"
-                    };
+                    return CreateResponse(false, null, "Training not found");
                 }
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = true,
-                    Data = training
-                };
+                return CreateResponse(true, training);
             }
             catch (Exception ex)
             {
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = false,
-                    Data = ex,
-                    Message = ex.Message
-                };
+                return HandleException(ex);
             }
         }
 
@@ -133,31 +102,15 @@ namespace GymApp.Data.Repositories
                 var existingTraining = _trainingContext.Trainings.Find(training.Id);
                 if (existingTraining == null)
                 {
-                    return new RepositoryResponse<dynamic>
-                    {
-                        Success = false,
-                        Data = null,
-                        Message = "Training not found"
-                    };
+                    return CreateResponse(false, null, "Training not found");
                 }
-                existingTraining = training;
-
+                _trainingContext.Entry(existingTraining).CurrentValues.SetValues(training);
                 _trainingContext.SaveChanges();
-
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = true,
-                    Data = training
-                };
+                return CreateResponse(true, training);
             }
             catch (Exception ex)
             {
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = false,
-                    Data = ex,
-                    Message = ex.Message
-                };
+                return HandleException(ex);
             }
         }
     }

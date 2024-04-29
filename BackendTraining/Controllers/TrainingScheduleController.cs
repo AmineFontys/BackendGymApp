@@ -1,5 +1,6 @@
 ﻿using GymAppTraining.Api.Interfaces;
 using GymAppTraining.Api.Models;
+using GymAppTraining.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GymAppTraining.Api.Controllers
@@ -8,59 +9,27 @@ namespace GymAppTraining.Api.Controllers
     [ApiController]
     public class TrainingScheduleController : Controller
     {
-        private readonly ITrainingService _trainingService;
+        private readonly ITrainingScheduleService _trainingScheduleService;
 
-        public TrainingScheduleController(ITrainingService trainingService)
+        public TrainingScheduleController(ITrainingScheduleService trainingScheduleService)
         {
-            _trainingService = trainingService;
+            _trainingScheduleService = trainingScheduleService;
         }
 
         [HttpGet]
-        public IActionResult GetAllTrainings()
-        {
-            var response = _trainingService.GetAllTrainings();
-            if (response.Success)
-            {
-                return Ok(response.Data);
-            }
-            else
-            {
-                return BadRequest(response.Message);
-            }
-        }
-
+        public IActionResult GetAllTrainingSchedules() => HandleResponse(_trainingScheduleService.GetAllTrainingSchedules());
+        [HttpGet]
+        public IActionResult GetTrainingById(Guid id) => HandleResponse(_trainingScheduleService.GetTrainingScheduleById(id));
         [HttpPost]
-        public IActionResult AddTraining([FromBody] AddTrainingScheduleModel training)
-        {
-            var response = _trainingService.AddTraining(training);
-            if (response.Success)
-            {
-                return Ok(response.Data);
-            }
-            else
-            {
-                return BadRequest(response.Message);
-            }
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult GetTrainingById(int id)
-        {
-            var response = _trainingService.GetTrainingById(id);
-            if (response.Success)
-            {
-                return Ok(response.Data);
-            }
-            else
-            {
-                return BadRequest(response.Message);
-            }
-        }
-
+        public IActionResult AddTraining([FromBody] AddTrainingScheduleModel training) => HandleResponse(_trainingScheduleService.AddTrainingSchedule(training));
         [HttpPut]
-        public IActionResult UpdateTraining([FromBody] UpdateTrainingModel training)
+        public IActionResult UpdateTraining([FromBody] UpdateTrainingScheduleModel training) => HandleResponse(_trainingScheduleService.UpdateTrainingSchedule(training));
+        [HttpDelete]
+        public IActionResult DeleteTraining(Guid id) => HandleResponse(_trainingScheduleService.DeleteTrainingSchedule(id));
+
+
+        private IActionResult HandleResponse<T>(ServiceResponse<T> response)
         {
-            var response = _trainingService.UpdateTraining(training);
             if (response.Success)
             {
                 return Ok(response.Data);
@@ -70,20 +39,5 @@ namespace GymAppTraining.Api.Controllers
                 return BadRequest(response.Message);
             }
         }
-
-        [HttpDelete("{id}")]
-        public IActionResult DeleteTraining(int id)
-        {
-            var response = _trainingService.DeleteTraining(id);
-            if (response.Success)
-            {
-                return Ok(response.Data);
-            }
-            else
-            {
-                return BadRequest(response.Message);
-            }
-        }
-
     }
 }

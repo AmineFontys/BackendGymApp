@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GymApp.Data.Entities;
 using GymApp.Data.Interfaces;
+using GymApp.Data.Repositories;
 using GymAppTraining.Api.Interfaces;
 using GymAppTraining.Api.Models;
 
@@ -17,144 +18,18 @@ namespace GymAppTraining.Api.Services
             _mapper = mapper;
         }
 
-        public ServiceResponse<dynamic> GetAllTrainingSchedules()
-        {
-            var trainingSchedules = _trainingScheduleRepository.GetAllTrainingSchedules();
-            if (trainingSchedules.Success)
-            {
-                try
-                {
-                    return new ServiceResponse<dynamic>
-                    {
-                        Success = true,
-                        Data = trainingSchedules.Data
-                    };
-                }
-                catch (System.Exception ex)
-                {
-                    return new ServiceResponse<dynamic>
-                    {
-                        Success = false,
-                        Data = ex,
-                        Message = ex.Message
-                    };
-                }
-            }
-            else
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = false,
-                    Data = trainingSchedules.Data,
-                    Message = trainingSchedules.Message
-                };
-            }
-        }
+        private ServiceResponse<dynamic> CreateResponse(bool success, dynamic data, string message) => new ServiceResponse<dynamic> { Success = success, Data = data, Message = message };
 
-        public ServiceResponse<dynamic> AddTrainingSchedule(AddTrainingScheduleModel trainingSchedule)
-        {
-            var trainingScheduleEntity = _mapper.Map<TrainingSchedule>(trainingSchedule);
-            var response = _trainingScheduleRepository.AddTrainingSchedule(trainingScheduleEntity);
-            if (response.Success)
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = true,
-                    Data = response.Data
-                };
-            }
-            else
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = false,
-                    Data = response.Data,
-                    Message = response.Message
-                };
-            }
-        }
+        private ServiceResponse<dynamic> HandleResponse(RepositoryResponse<dynamic> response) => CreateResponse(response.Success, response.Data, response.Message);
 
-        public ServiceResponse<dynamic> UpdateTrainingSchedule(UpdateTrainingScheduleModel trainingSchedule)
-        {
-            var trainingScheduleEntity = _mapper.Map<TrainingSchedule>(trainingSchedule);
-            var response = _trainingScheduleRepository.UpdateTrainingSchedule(trainingScheduleEntity);
-            if (response.Success)
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = true,
-                    Data = response.Data
-                };
-            }
-            else
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = false,
-                    Data = response.Data,
-                    Message = response.Message
-                };
-            }
-        }
+        public ServiceResponse<dynamic> GetAllTrainingSchedules() => HandleResponse(_trainingScheduleRepository.GetAllTrainingSchedules());
 
-        public ServiceResponse<dynamic> GetTrainingScheduleById(Guid id)
-        {
-            var trainingSchedule = _trainingScheduleRepository.GetTrainingScheduleById(id);
-            if (trainingSchedule.Success)
-            {
-                try
-                {
-                    return new ServiceResponse<dynamic>
-                    {
-                        Success = true,
-                        Data = trainingSchedule.Data
-                    };
-                }
-                catch (System.Exception ex)
-                {
-                    return new ServiceResponse<dynamic>
-                    {
-                        Success = false,
-                        Data = ex,
-                        Message = ex.Message
-                    };
-                }
-            }
-            else
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = false,
-                    Data = trainingSchedule.Data,
-                    Message = trainingSchedule.Message
-                };
-            }
-        }
+        public ServiceResponse<dynamic> AddTrainingSchedule(AddTrainingScheduleModel trainingSchedule) => HandleResponse(_trainingScheduleRepository.AddTrainingSchedule(_mapper.Map<TrainingSchedule>(trainingSchedule)));
 
-        public ServiceResponse<dynamic> DeleteTrainingSchedule(Guid id)
-        {
-            var response = _trainingScheduleRepository.DeleteTrainingSchedule(id);
-            if (response.Success)
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = true,
-                    Data = response.Data
-                };
-            }
-            else
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = false,
-                    Data = response.Data,
-                    Message = response.Message
-                };
-            }
-        }
+        public ServiceResponse<dynamic> UpdateTrainingSchedule(UpdateTrainingScheduleModel trainingSchedule) => HandleResponse(_trainingScheduleRepository.UpdateTrainingSchedule(_mapper.Map<TrainingSchedule>(trainingSchedule)));
 
-       
+        public ServiceResponse<dynamic> GetTrainingScheduleById(Guid id) => HandleResponse(_trainingScheduleRepository.GetTrainingScheduleById(id));
 
-
+        public ServiceResponse<dynamic> DeleteTrainingSchedule(Guid id) => HandleResponse(_trainingScheduleRepository.DeleteTrainingSchedule(id));
     }
 }

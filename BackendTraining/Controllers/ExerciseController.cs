@@ -1,5 +1,6 @@
 ﻿using GymAppTraining.Api.Interfaces;
 using GymAppTraining.Api.Models;
+using GymAppTraining.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GymAppTraining.Api.Controllers
@@ -16,23 +17,19 @@ namespace GymAppTraining.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllExercises()
-        {
-            var response = _exerciseService.GetAllExercises();
-            if (response.Success)
-            {
-                return Ok(response.Data);
-            }
-            else
-            {
-                return BadRequest(response.Message);
-            }
-        }
-
+        public IActionResult GetAllExercises() => HandleResponse(_exerciseService.GetAllExercises());
+        [HttpGet]
+        public IActionResult GetExerciseById(Guid id) => HandleResponse(_exerciseService.GetExerciseById(id));
         [HttpPost]
-        public IActionResult AddExercise([FromBody] AddExerciseModel exercise)
+        public IActionResult AddExercise([FromBody] AddExerciseModel exercise) => HandleResponse(_exerciseService.AddExercise(exercise));
+        [HttpPut]
+        public IActionResult UpdateExercise([FromBody] UpdateExerciseModel exercise) => HandleResponse(_exerciseService.UpdateExercise(exercise));
+        [HttpDelete]
+        public IActionResult DeleteExercise(Guid id) => HandleResponse(_exerciseService.DeleteExercise(id));
+
+
+        private IActionResult HandleResponse<T>(ServiceResponse<T> response)
         {
-            var response = _exerciseService.AddExercise(exercise);
             if (response.Success)
             {
                 return Ok(response.Data);
@@ -42,6 +39,5 @@ namespace GymAppTraining.Api.Controllers
                 return BadRequest(response.Message);
             }
         }
-
     }
 }

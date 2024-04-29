@@ -17,26 +17,32 @@ namespace GymApp.Data.Repositories
             _trainingContext = trainingContext;
         }
 
+        private RepositoryResponse<dynamic> CreateResponse(bool success, dynamic? data, string? message = null)
+        {
+            return new RepositoryResponse<dynamic>
+            {
+                Success = success,
+                Data = data,
+                Message = message
+            };
+        }
+
+        private RepositoryResponse<dynamic> HandleException(Exception ex)
+        {
+            return CreateResponse(false, ex, ex.Message);
+        }
+
         public RepositoryResponse<dynamic> AddTrainingSchedule(TrainingSchedule trainingSchedule)
         {
             try
             {
                 _trainingContext.TrainingSchedules.Add(trainingSchedule);
                 _trainingContext.SaveChanges();
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = true,
-                    Data = trainingSchedule
-                };
+                return CreateResponse(true, trainingSchedule);
             }
             catch (Exception ex)
             {
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = false,
-                    Data = ex,
-                    Message = ex.Message
-                };
+                return HandleException(ex);
             }
         }
 
@@ -47,29 +53,15 @@ namespace GymApp.Data.Repositories
                 var trainingSchedule = _trainingContext.TrainingSchedules.Find(id);
                 if (trainingSchedule == null)
                 {
-                    return new RepositoryResponse<dynamic>
-                    {
-                        Success = false,
-                        Data = null,
-                        Message = "Training Schedule not found"
-                    };
+                    return CreateResponse(false, null, "Training Schedule not found");
                 }
                 _trainingContext.TrainingSchedules.Remove(trainingSchedule);
                 _trainingContext.SaveChanges();
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = true,
-                    Data = trainingSchedule
-                };
+                return CreateResponse(true, trainingSchedule);
             }
             catch (Exception ex)
             {
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = false,
-                    Data = ex,
-                    Message = ex.Message
-                };
+                return HandleException(ex);
             }
         }
 
@@ -78,20 +70,11 @@ namespace GymApp.Data.Repositories
             try
             {
                 var trainingSchedules = _trainingContext.TrainingSchedules.ToList();
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = true,
-                    Data = trainingSchedules
-                };
+                return CreateResponse(true, trainingSchedules);
             }
             catch (Exception ex)
             {
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = false,
-                    Data = ex,
-                    Message = ex.Message
-                };
+                return HandleException(ex);
             }
         }
 
@@ -102,49 +85,27 @@ namespace GymApp.Data.Repositories
                 var trainingSchedule = _trainingContext.TrainingSchedules.Find(id);
                 if (trainingSchedule == null)
                 {
-                    return new RepositoryResponse<dynamic>
-                    {
-                        Success = false,
-                        Data = null,
-                        Message = "Training Schedule not found"
-                    };
+                    return CreateResponse(false, null, "Training Schedule not found");
                 }
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = true,
-                    Data = trainingSchedule
-                };
+                return CreateResponse(true, trainingSchedule);
             }
             catch (Exception ex)
             {
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = false,
-                    Data = ex,
-                    Message = ex.Message
-                };
+                return HandleException(ex);
             }
         }
+
         public RepositoryResponse<dynamic> UpdateTrainingSchedule(TrainingSchedule trainingSchedule)
         {
             try
             {
                 _trainingContext.TrainingSchedules.Update(trainingSchedule);
                 _trainingContext.SaveChanges();
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = true,
-                    Data = trainingSchedule
-                };
+                return CreateResponse(true, trainingSchedule);
             }
             catch (Exception ex)
             {
-                return new RepositoryResponse<dynamic>
-                {
-                    Success = false,
-                    Data = ex,
-                    Message = ex.Message
-                };
+                return HandleException(ex);
             }
         }
     }

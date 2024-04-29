@@ -1,5 +1,6 @@
 ﻿using GymAppTraining.Api.Interfaces;
 using GymAppTraining.Api.Models;
+using GymAppTraining.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GymAppTraining.Api.Controllers
@@ -16,37 +17,18 @@ namespace GymAppTraining.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllEnrollments()
-        {
-            var response = _enrollmentService.GetAllEnrollments();
-            if (response.Success)
-            {
-                return Ok(response.Data);
-            }
-            else
-            {
-                return BadRequest(response.Message);
-            }
-        }
-
+        public IActionResult GetAllEnrollments() => HandleResponse(_enrollmentService.GetAllEnrollments());
+        [HttpGet]
+        public IActionResult GetEnrollmentById(Guid id) => HandleResponse(_enrollmentService.GetEnrollmentById(id));
         [HttpPost]
-        public IActionResult AddEnrollment([FromBody] AddEnrollmentModel enrollment)
-        {
-            var response = _enrollmentService.AddEnrollment(enrollment);
-            if (response.Success)
-            {
-                return Ok(response.Data);
-            }
-            else
-            {
-                return BadRequest(response.Message);
-            }
-        }
-
+        public IActionResult AddEnrollment([FromBody] AddEnrollmentModel enrollment) => HandleResponse(_enrollmentService.AddEnrollment(enrollment));
         [HttpPut]
-        public IActionResult UpdateEnrollment([FromBody] UpdateEnrollmentModel enrollment)
+        public IActionResult UpdateEnrollment([FromBody] UpdateEnrollmentModel enrollment) => HandleResponse(_enrollmentService.UpdateEnrollment(enrollment));
+        [HttpDelete]
+        public IActionResult DeleteEnrollment(Guid id) => HandleResponse(_enrollmentService.DeleteEnrollment(id));
+
+        private IActionResult HandleResponse<T>(ServiceResponse<T> response)
         {
-            var response = _enrollmentService.UpdateEnrollment(enrollment);
             if (response.Success)
             {
                 return Ok(response.Data);
@@ -56,20 +38,5 @@ namespace GymAppTraining.Api.Controllers
                 return BadRequest(response.Message);
             }
         }
-
-        [HttpDelete("{id}")]
-        public IActionResult DeleteEnrollment(Guid id)
-        {
-            var response = _enrollmentService.DeleteEnrollment(id);
-            if (response.Success)
-            {
-                return Ok(response.Data);
-            }
-            else
-            {
-                return BadRequest(response.Message);
-            }
-        }
-
     }
 }

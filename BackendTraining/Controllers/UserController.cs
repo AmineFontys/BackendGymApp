@@ -1,4 +1,5 @@
 ﻿using GymAppTraining.Api.Models;
+using GymAppTraining.Api.Services;
 using GymAppTraining.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,36 +18,31 @@ namespace GymAppTraining.Api.Controllers
         }
 
 
+
         [HttpGet]
-        public IActionResult GetAll() 
-        {
-            var result = _iuserService.GetAllUsers();
-
-            if (result.Success) 
-            { 
-                return Ok(result.Data);
-            }
-            else
-            {
-                return BadRequest(result.Message);
-            }
-        }
-
+        public IActionResult GetAllUsers() => HandleResponse(_iuserService.GetAllUsers());
+        [HttpGet]
+        public IActionResult GetUserById(Guid id) => HandleResponse(_iuserService.GetUserById(id));
         [HttpPost]
-        public IActionResult Add(AddUserModel user)
-        {
-            var result = _iuserService.AddUser(user);
+        public IActionResult AddUser([FromBody] AddUserModel user) => HandleResponse(_iuserService.AddUser(user));
+        [HttpPut]
+        public IActionResult UpdateUser([FromBody] UpdateUserModel user) => HandleResponse(_iuserService.UpdateUser(user));
+        [HttpDelete]
+        public IActionResult DeleteUser(Guid id) => HandleResponse(_iuserService.DeleteUser(id));
+       
 
-            if (result.Success)
+
+
+        private IActionResult HandleResponse<T>(ServiceResponse<T> response)
+        {
+            if (response.Success)
             {
-                return Ok(result.Message);
+                return Ok(response.Data);
             }
             else
             {
-                return BadRequest(result.Message);
+                return BadRequest(response.Message);
             }
         }
-
-
     }
 }

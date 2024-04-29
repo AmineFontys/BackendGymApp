@@ -11,9 +11,9 @@ namespace GymApp.Data.Interfaces
     public interface ITrainingRepository
     {
         RepositoryResponse<dynamic> GetAllTrainings();
-        RepositoryResponse<dynamic> GetTrainingById(int id);
+        RepositoryResponse<dynamic> GetTrainingById(Guid id);
         RepositoryResponse<dynamic> AddTraining(Training training);
         RepositoryResponse<dynamic> UpdateTraining(Training training);
-        RepositoryResponse<dynamic> DeleteTraining(int id);
+        RepositoryResponse<dynamic> DeleteTraining(Guid id);
     }
 }

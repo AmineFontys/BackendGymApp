@@ -7,7 +7,7 @@ using GymAppTraining.Api.Models;
 
 namespace GymAppTraining.Api.Services
 {
-    public class EnrollmentService: IEnrollmentService
+    public class EnrollmentService : IEnrollmentService
     {
         private readonly IEnrollmentRepository _iEnrollmentRepository;
         private readonly IMapper _mapper;
@@ -18,143 +18,18 @@ namespace GymAppTraining.Api.Services
             _mapper = mapper;
         }
 
-        public ServiceResponse<dynamic> GetAllEnrollments()
-        {
-            var enrollments = _iEnrollmentRepository.GetAllEnrollments();
-            if (enrollments.Success)
-            {
-                try
-                {
-                    return new ServiceResponse<dynamic>
-                    {
-                        Success = true,
-                        Data = enrollments.Data
-                    };
-                }
-                catch (System.Exception ex)
-                {
-                    return new ServiceResponse<dynamic>
-                    {
-                        Success = false,
-                        Data = ex,
-                        Message = ex.Message
-                    };
-                }
-            }
-            else
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = false,
-                    Data = enrollments.Data,
-                    Message = enrollments.Message
-                };
-            }
-        }
+        private ServiceResponse<dynamic> CreateResponse(bool success, dynamic data, string message) => new ServiceResponse<dynamic> { Success = success, Data = data, Message = message };
 
-        public ServiceResponse<dynamic> AddEnrollment(AddEnrollmentModel enrollment)
-        {
-            var enrollmentEntity = _mapper.Map<Enrollment>(enrollment);
-            var response = _iEnrollmentRepository.AddEnrollment(enrollmentEntity);
-            if (response.Success)
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = true,
-                    Data = response.Data
-                };
-            }
-            else
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = false,
-                    Data = response.Data,
-                    Message = response.Message
-                };
-            }
-        }
+        private ServiceResponse<dynamic> HandleResponse(RepositoryResponse<dynamic> response) => CreateResponse(response.Success, response.Data, response.Message);
 
-        public ServiceResponse<dynamic> GetEnrollmentById(Guid id)
-        {
-            var enrollment = _iEnrollmentRepository.GetEnrollmentById(id);
-            if (enrollment.Success)
-            {
-                try
-                {
-                    return new ServiceResponse<dynamic>
-                    {
-                        Success = true,
-                        Data = enrollment.Data
-                    };
-                }
-                catch (System.Exception ex)
-                {
-                    return new ServiceResponse<dynamic>
-                    {
-                        Success = false,
-                        Data = ex,
-                        Message = ex.Message
-                    };
-                }
-            }
-            else
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = false,
-                    Data = enrollment.Data,
-                    Message = enrollment.Message
-                };
-            }
-        }
+        public ServiceResponse<dynamic> GetAllEnrollments() => HandleResponse(_iEnrollmentRepository.GetAllEnrollments());
 
-        public ServiceResponse<dynamic> UpdateEnrollment(UpdateEnrollmentModel enrollment)
-        {
-            var enrollmentEntity = _mapper.Map<Enrollment>(enrollment);
-            var response = _iEnrollmentRepository.UpdateEnrollment(enrollmentEntity);
-            if (response.Success)
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = true,
-                    Data = response.Data
-                };
-            }
-            else
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = false,
-                    Data = response.Data,
-                    Message = response.Message
-                };
-            }
-        }
+        public ServiceResponse<dynamic> AddEnrollment(AddEnrollmentModel enrollment) => HandleResponse(_iEnrollmentRepository.AddEnrollment(_mapper.Map<Enrollment>(enrollment)));
 
-        public ServiceResponse<dynamic> DeleteEnrollment(Guid id)
-        {
-            var response = _iEnrollmentRepository.DeleteEnrollment(id);
-            if (response.Success)
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = true,
-                    Data = response.Data
-                };
-            }
-            else
-            {
-                return new ServiceResponse<dynamic>
-                {
-                    Success = false,
-                    Data = response.Data,
-                    Message = response.Message
-                };
-            }
-        }
+        public ServiceResponse<dynamic> GetEnrollmentById(Guid id) => HandleResponse(_iEnrollmentRepository.GetEnrollmentById(id));
 
+        public ServiceResponse<dynamic> UpdateEnrollment(UpdateEnrollmentModel enrollment) => HandleResponse(_iEnrollmentRepository.UpdateEnrollment(_mapper.Map<Enrollment>(enrollment)));
 
-
+        public ServiceResponse<dynamic> DeleteEnrollment(Guid id) => HandleResponse(_iEnrollmentRepository.DeleteEnrollment(id));
     }
 }

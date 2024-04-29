@@ -1,5 +1,6 @@
 ﻿using GymAppTraining.Api.Interfaces;
 using GymAppTraining.Api.Models;
+using GymAppTraining.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GymAppTraining.Api.Controllers
@@ -16,65 +17,22 @@ namespace GymAppTraining.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllTrainings()
-        {
-            var response = _trainingService.GetAllTrainings();
-            if (response.Success)
-            {
-                return Ok(response.Data);
-            }
-            else
-            {
-                return BadRequest(response.Message);
-            }
-        }
+        public IActionResult GetAllTrainings() => HandleResponse(_trainingService.GetAllTrainings());
 
         [HttpPost]
-        public IActionResult AddTraining([FromBody] AddTrainingScheduleModel training)
-        {
-            var response = _trainingService.AddTraining(training);
-            if (response.Success)
-            {
-                return Ok(response.Data);
-            }
-            else
-            {
-                return BadRequest(response.Message);
-            }
-        }
+        public IActionResult AddTraining([FromBody] AddTrainingModel training) => HandleResponse(_trainingService.AddTraining(training));
 
         [HttpGet("{id}")]
-        public IActionResult GetTrainingById(int id)
-        {
-            var response = _trainingService.GetTrainingById(id);
-            if (response.Success)
-            {
-                return Ok(response.Data);
-            }
-            else
-            {
-                return BadRequest(response.Message);
-            }
-        }
+        public IActionResult GetTrainingById(Guid id) => HandleResponse(_trainingService.GetTrainingById(id));
 
         [HttpPut]
-        public IActionResult UpdateTraining([FromBody] UpdateTrainingModel training)
-        {
-            var response = _trainingService.UpdateTraining(training);
-            if (response.Success)
-            {
-                return Ok(response.Data);
-            }
-            else
-            {
-                return BadRequest(response.Message);
-            }
-        }
+        public IActionResult UpdateTraining([FromBody] UpdateTrainingModel training) => HandleResponse(_trainingService.UpdateTraining(training));
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteTraining(int id)
+        public IActionResult DeleteTraining(Guid id) => HandleResponse(_trainingService.DeleteTraining(id));
+
+        private IActionResult HandleResponse<T>(ServiceResponse<T> response)
         {
-            var response = _trainingService.DeleteTraining(id);
             if (response.Success)
             {
                 return Ok(response.Data);
