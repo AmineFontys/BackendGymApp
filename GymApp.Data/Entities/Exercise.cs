@@ -11,7 +11,7 @@ namespace GymApp.Data.Entities
     [Table("Exercise")]
     public class Exercise
     {
-        [Key] [Required] public Guid ID { get; set; }
+        [Key] [Required] public Guid Id { get; set; }
 
         [Required] [StringLength(50)] public string? Name { get; set; }
 
@@ -20,6 +20,7 @@ namespace GymApp.Data.Entities
         [Required] [StringLength(250)] public string? Description { get; set; }
 
         [Required] public uint Reps { get; set; }
+        [Required] public uint DurationRep { get; set; }
 
         [Required] public uint Sets { get; set; }
 
@@ -27,7 +28,7 @@ namespace GymApp.Data.Entities
 
         [Required] public uint RestTime { get; set; }
 
-        [Required] public uint DurationInSeconds { get; set; }
+        [Required] public uint TotalDuration { get; set; }
 
         public virtual ICollection<TrainingSchedule> TrainingSchedules { get; set; } = [];
 

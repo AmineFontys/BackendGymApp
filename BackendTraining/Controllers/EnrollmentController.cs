@@ -18,13 +18,13 @@ namespace GymAppTraining.Api.Controllers
 
         [HttpGet]
         public IActionResult GetAllEnrollments() => HandleResponse(_enrollmentService.GetAllEnrollments());
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult GetEnrollmentById(Guid id) => HandleResponse(_enrollmentService.GetEnrollmentById(id));
         [HttpPost]
-        public IActionResult AddEnrollment([FromBody] AddEnrollmentModel enrollment) => HandleResponse(_enrollmentService.AddEnrollment(enrollment));
+        public IActionResult AddEnrollment([FromBody] EnrollmentModel enrollment) => HandleResponse(_enrollmentService.AddEnrollment(enrollment));
         [HttpPut]
-        public IActionResult UpdateEnrollment([FromBody] UpdateEnrollmentModel enrollment) => HandleResponse(_enrollmentService.UpdateEnrollment(enrollment));
-        [HttpDelete]
+        public IActionResult UpdateEnrollment([FromBody] EnrollmentModel enrollment) => HandleResponse(_enrollmentService.UpdateEnrollment(enrollment));
+        [HttpDelete("{id}")]
         public IActionResult DeleteEnrollment(Guid id) => HandleResponse(_enrollmentService.DeleteEnrollment(id));
 
         private IActionResult HandleResponse<T>(ServiceResponse<T> response)

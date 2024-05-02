@@ -11,10 +11,11 @@ namespace GymApp.Data.Interfaces
     public interface IExerciseRepository
     {
         RepositoryResponse<dynamic> GetAllExercises();
-        RepositoryResponse<dynamic> AddExercise(Exercise exercise);
-        RepositoryResponse<dynamic> UpdateExercise(Exercise exercise);
-        RepositoryResponse<dynamic> DeleteExercise(Guid id);
         RepositoryResponse<dynamic> GetExerciseById(Guid id);
+        RepositoryResponse<dynamic> AddExercise(Exercise addExercise);
+        RepositoryResponse<dynamic> UpdateExercise(Exercise updateExercise);
+        RepositoryResponse<dynamic> DeleteExercise(Guid id);
+        
 
     }
 }

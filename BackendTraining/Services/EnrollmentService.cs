@@ -11,25 +11,20 @@ namespace GymAppTraining.Api.Services
     {
         private readonly IEnrollmentRepository _iEnrollmentRepository;
         private readonly IMapper _mapper;
+        private readonly IService _service;
 
-        public EnrollmentService(IEnrollmentRepository enrollmentRepository, IMapper mapper)
+        public EnrollmentService(IEnrollmentRepository enrollmentRepository, IMapper mapper, IService service)
         {
             _iEnrollmentRepository = enrollmentRepository;
             _mapper = mapper;
+            _service = service;
         }
 
-        private static ServiceResponse<dynamic> CreateResponse(bool success, dynamic data, string message) => new ServiceResponse<dynamic> { Success = success, Data = data, Message = message };
-
-        private static ServiceResponse<dynamic> HandleResponse(RepositoryResponse<dynamic> response) => CreateResponse(response.Success, response.Data, response.Message);
-
-        public ServiceResponse<dynamic> GetAllEnrollments() => HandleResponse(_iEnrollmentRepository.GetAllEnrollments());
-
-        public ServiceResponse<dynamic> AddEnrollment(AddEnrollmentModel enrollment) => HandleResponse(_iEnrollmentRepository.AddEnrollment(_mapper.Map<Enrollment>(enrollment)));
-
-        public ServiceResponse<dynamic> GetEnrollmentById(Guid id) => HandleResponse(_iEnrollmentRepository.GetEnrollmentById(id));
-
-        public ServiceResponse<dynamic> UpdateEnrollment(UpdateEnrollmentModel enrollment) => HandleResponse(_iEnrollmentRepository.UpdateEnrollment(_mapper.Map<Enrollment>(enrollment)));
-
-        public ServiceResponse<dynamic> DeleteEnrollment(Guid id) => HandleResponse(_iEnrollmentRepository.DeleteEnrollment(id));
+        
+        public ServiceResponse<dynamic> GetAllEnrollments() => _service.HandleResponse<Exercise, ExerciseModel>(_iEnrollmentRepository.GetAllEnrollments());
+        public ServiceResponse<dynamic> GetEnrollmentById(Guid id) => _service.HandleResponse<Exercise, ExerciseModel>(_iEnrollmentRepository.GetEnrollmentById(id));
+        public ServiceResponse<dynamic> AddEnrollment(EnrollmentModel enrollment) => _service.HandleResponse<Exercise, ExerciseModel>(_iEnrollmentRepository.AddEnrollment(_mapper.Map<Enrollment>(enrollment)));
+        public ServiceResponse<dynamic> UpdateEnrollment(EnrollmentModel enrollment) => _service.HandleResponse<Exercise, ExerciseModel>(_iEnrollmentRepository.UpdateEnrollment(_mapper.Map<Enrollment>(enrollment)));
+        public ServiceResponse<dynamic> DeleteEnrollment(Guid id) => _service.HandleResponse<Exercise, ExerciseModel>(_iEnrollmentRepository.DeleteEnrollment(id));
     }
 }

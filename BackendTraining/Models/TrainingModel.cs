@@ -1,6 +1,6 @@
 ﻿namespace GymAppTraining.Api.Models
 {
-    public class UpdateTrainingScheduleModel
+    public class TrainingModel
     {
         public Guid Id { get; set; }
         public Guid TrainerId { get; set; }

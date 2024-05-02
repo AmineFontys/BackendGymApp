@@ -12,9 +12,9 @@ namespace GymAppTraining.Interfaces
     public interface IUserService
     {
         ServiceResponse<dynamic> GetAllUsers();
-        ServiceResponse<dynamic> AddUser(AddUserModel user);
         ServiceResponse<dynamic> GetUserById(Guid id);
-        ServiceResponse<dynamic> UpdateUser(UpdateUserModel user);
+        ServiceResponse<dynamic> AddUser(UserModel user);
+        ServiceResponse<dynamic> UpdateUser(UserModel user);
         ServiceResponse<dynamic> DeleteUser(Guid id);
     }
 }

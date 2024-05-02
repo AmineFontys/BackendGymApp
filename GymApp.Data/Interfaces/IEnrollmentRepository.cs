@@ -12,8 +12,8 @@ namespace GymApp.Data.Interfaces
     {
         RepositoryResponse<dynamic> GetAllEnrollments();
         RepositoryResponse<dynamic> GetEnrollmentById(Guid id);
-        RepositoryResponse<dynamic> AddEnrollment(Enrollment enrollment);
-        RepositoryResponse<dynamic> UpdateEnrollment(Enrollment enrollment);
+        RepositoryResponse<dynamic> AddEnrollment(Enrollment addEnrollment);
+        RepositoryResponse<dynamic> UpdateEnrollment(Enrollment UpdateEnrollment);
         RepositoryResponse<dynamic> DeleteEnrollment(Guid id);
     }
 }

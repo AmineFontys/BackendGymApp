@@ -12,9 +12,9 @@ namespace GymApp.Data.Interfaces
     public interface IUserRepository
     {
         RepositoryResponse<dynamic> GetAllUsers();
-        RepositoryResponse<dynamic> AddUser(User user);
-        RepositoryResponse<dynamic> UpdateUser(User user);
         RepositoryResponse<dynamic> DeleteUser(Guid id);
+        RepositoryResponse<dynamic> AddUser(User addUser);
+        RepositoryResponse<dynamic> UpdateUser(User updateUser);
         RepositoryResponse<dynamic> GetUserById(Guid id);
     }
 }

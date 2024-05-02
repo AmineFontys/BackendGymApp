@@ -11,8 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GymApp.Data", "GymApp.Data\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AB9B4235-FEE0-45B1-B4D9-EB0812A2E484}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		OperationResult.cs = OperationResult.cs
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendUnitTest", "BackendUnitTest\BackendUnitTest.csproj", "{5F6393A9-AF20-47A2-99C4-BB0AFF550495}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +35,10 @@ Global
 		{D56BD637-CD81-4780-B25E-0121DC0C4D23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D56BD637-CD81-4780-B25E-0121DC0C4D23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D56BD637-CD81-4780-B25E-0121DC0C4D23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F6393A9-AF20-47A2-99C4-BB0AFF550495}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F6393A9-AF20-47A2-99C4-BB0AFF550495}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F6393A9-AF20-47A2-99C4-BB0AFF550495}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F6393A9-AF20-47A2-99C4-BB0AFF550495}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

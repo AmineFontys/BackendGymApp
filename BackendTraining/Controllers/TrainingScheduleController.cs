@@ -18,13 +18,13 @@ namespace GymAppTraining.Api.Controllers
 
         [HttpGet]
         public IActionResult GetAllTrainingSchedules() => HandleResponse(_trainingScheduleService.GetAllTrainingSchedules());
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult GetTrainingById(Guid id) => HandleResponse(_trainingScheduleService.GetTrainingScheduleById(id));
         [HttpPost]
-        public IActionResult AddTraining([FromBody] AddTrainingScheduleModel training) => HandleResponse(_trainingScheduleService.AddTrainingSchedule(training));
+        public IActionResult AddTraining([FromBody] TrainingScheduleModel training) => HandleResponse(_trainingScheduleService.AddTrainingSchedule(training));
         [HttpPut]
-        public IActionResult UpdateTraining([FromBody] UpdateTrainingScheduleModel training) => HandleResponse(_trainingScheduleService.UpdateTrainingSchedule(training));
-        [HttpDelete]
+        public IActionResult UpdateTraining([FromBody] TrainingScheduleModel training) => HandleResponse(_trainingScheduleService.UpdateTrainingSchedule(training));
+        [HttpDelete("{id}")]
         public IActionResult DeleteTraining(Guid id) => HandleResponse(_trainingScheduleService.DeleteTrainingSchedule(id));
 
 

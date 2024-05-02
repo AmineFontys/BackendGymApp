@@ -12,7 +12,7 @@ namespace GymAppTraining.Api.Controllers
     {
         private readonly IUserService _iuserService;
 
-        public UserController(IUserService iuserService) 
+        public UserController(IUserService iuserService)
         {
             _iuserService = iuserService;
         }
@@ -21,15 +21,15 @@ namespace GymAppTraining.Api.Controllers
 
         [HttpGet]
         public IActionResult GetAllUsers() => HandleResponse(_iuserService.GetAllUsers());
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult GetUserById(Guid id) => HandleResponse(_iuserService.GetUserById(id));
         [HttpPost]
-        public IActionResult AddUser([FromBody] AddUserModel user) => HandleResponse(_iuserService.AddUser(user));
+        public IActionResult AddUser([FromBody] UserModel user) => HandleResponse(_iuserService.AddUser(user));
         [HttpPut]
-        public IActionResult UpdateUser([FromBody] UpdateUserModel user) => HandleResponse(_iuserService.UpdateUser(user));
-        [HttpDelete]
+        public IActionResult UpdateUser([FromBody] UserModel user) => HandleResponse(_iuserService.UpdateUser(user));
+        [HttpDelete("{id}")]
         public IActionResult DeleteUser(Guid id) => HandleResponse(_iuserService.DeleteUser(id));
-       
+
 
 
 

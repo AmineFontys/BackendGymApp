@@ -18,13 +18,13 @@ namespace GymAppTraining.Api.Controllers
 
         [HttpGet]
         public IActionResult GetAllExercises() => HandleResponse(_exerciseService.GetAllExercises());
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult GetExerciseById(Guid id) => HandleResponse(_exerciseService.GetExerciseById(id));
         [HttpPost]
-        public IActionResult AddExercise([FromBody] AddExerciseModel exercise) => HandleResponse(_exerciseService.AddExercise(exercise));
+        public IActionResult AddExercise([FromBody] ExerciseModel exercise) => HandleResponse(_exerciseService.AddExercise(exercise));
         [HttpPut]
-        public IActionResult UpdateExercise([FromBody] UpdateExerciseModel exercise) => HandleResponse(_exerciseService.UpdateExercise(exercise));
-        [HttpDelete]
+        public IActionResult UpdateExercise([FromBody] ExerciseModel exercise) => HandleResponse(_exerciseService.UpdateExercise(exercise));
+        [HttpDelete("{id}")]
         public IActionResult DeleteExercise(Guid id) => HandleResponse(_exerciseService.DeleteExercise(id));
 
 
@@ -32,7 +32,7 @@ namespace GymAppTraining.Api.Controllers
         {
             if (response.Success)
             {
-                return Ok(response.Data);
+                return Ok(response);
             }
             else
             {

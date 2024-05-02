@@ -20,16 +20,17 @@ namespace GymAppTraining.Api.Controllers
         public IActionResult GetAllTrainings() => HandleResponse(_trainingService.GetAllTrainings());
 
         [HttpPost]
-        public IActionResult AddTraining([FromBody] AddTrainingModel training) => HandleResponse(_trainingService.AddTraining(training));
+        public IActionResult AddTraining([FromBody] TrainingModel training) => HandleResponse(_trainingService.AddTraining(training));
 
         [HttpGet("{id}")]
         public IActionResult GetTrainingById(Guid id) => HandleResponse(_trainingService.GetTrainingById(id));
 
         [HttpPut]
-        public IActionResult UpdateTraining([FromBody] UpdateTrainingModel training) => HandleResponse(_trainingService.UpdateTraining(training));
+        public IActionResult UpdateTraining([FromBody] TrainingModel training) => HandleResponse(_trainingService.UpdateTraining(training));
 
         [HttpDelete("{id}")]
         public IActionResult DeleteTraining(Guid id) => HandleResponse(_trainingService.DeleteTraining(id));
+
 
         private IActionResult HandleResponse<T>(ServiceResponse<T> response)
         {

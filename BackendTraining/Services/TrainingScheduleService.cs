@@ -11,25 +11,20 @@ namespace GymAppTraining.Api.Services
     {
         private readonly ITrainingScheduleRepository _trainingScheduleRepository;
         private readonly IMapper _mapper;
+        private readonly IService _service;
 
-        public TrainingScheduleService(ITrainingScheduleRepository trainingScheduleRepository, IMapper mapper)
+        public TrainingScheduleService(ITrainingScheduleRepository trainingScheduleRepository, IMapper mapper, IService service)
         {
             _trainingScheduleRepository = trainingScheduleRepository;
             _mapper = mapper;
+            _service = service;
         }
 
-        private static ServiceResponse<dynamic> CreateResponse(bool success, dynamic data, string message) => new ServiceResponse<dynamic> { Success = success, Data = data, Message = message };
 
-        private static ServiceResponse<dynamic> HandleResponse(RepositoryResponse<dynamic> response) => CreateResponse(response.Success, response.Data, response.Message);
-
-        public ServiceResponse<dynamic> GetAllTrainingSchedules() => HandleResponse(_trainingScheduleRepository.GetAllTrainingSchedules());
-
-        public ServiceResponse<dynamic> AddTrainingSchedule(AddTrainingScheduleModel trainingSchedule) => HandleResponse(_trainingScheduleRepository.AddTrainingSchedule(_mapper.Map<TrainingSchedule>(trainingSchedule)));
-
-        public ServiceResponse<dynamic> UpdateTrainingSchedule(UpdateTrainingScheduleModel trainingSchedule) => HandleResponse(_trainingScheduleRepository.UpdateTrainingSchedule(_mapper.Map<TrainingSchedule>(trainingSchedule)));
-
-        public ServiceResponse<dynamic> GetTrainingScheduleById(Guid id) => HandleResponse(_trainingScheduleRepository.GetTrainingScheduleById(id));
-
-        public ServiceResponse<dynamic> DeleteTrainingSchedule(Guid id) => HandleResponse(_trainingScheduleRepository.DeleteTrainingSchedule(id));
+        public ServiceResponse<dynamic> GetAllTrainingSchedules() => _service.HandleResponse<TrainingSchedule, TrainingScheduleModel>(_trainingScheduleRepository.GetAllTrainingSchedules());
+        public ServiceResponse<dynamic> GetTrainingScheduleById(Guid id) => _service.HandleResponse<TrainingSchedule, TrainingScheduleModel>(_trainingScheduleRepository.GetTrainingScheduleById(id));
+        public ServiceResponse<dynamic> AddTrainingSchedule(TrainingScheduleModel trainingScheduleModel) => _service.HandleResponse<TrainingSchedule, TrainingScheduleModel>(_trainingScheduleRepository.AddTrainingSchedule(_mapper.Map<TrainingSchedule>(trainingScheduleModel)));
+        public ServiceResponse<dynamic> UpdateTrainingSchedule(TrainingScheduleModel trainingScheduleModel) => _service.HandleResponse<TrainingSchedule, TrainingScheduleModel>(_trainingScheduleRepository.UpdateTrainingSchedule(_mapper.Map<TrainingSchedule>(trainingScheduleModel)));
+        public ServiceResponse<dynamic> DeleteTrainingSchedule(Guid id) => _service.HandleResponse<TrainingSchedule, TrainingScheduleModel>(_trainingScheduleRepository.DeleteTrainingSchedule(id));
     }
 }

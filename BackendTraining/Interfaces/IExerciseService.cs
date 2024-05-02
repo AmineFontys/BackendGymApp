@@ -6,9 +6,9 @@ namespace GymAppTraining.Api.Interfaces
     public interface IExerciseService
     {
         ServiceResponse<dynamic> GetAllExercises();
-        ServiceResponse<dynamic> AddExercise(AddExerciseModel exercise);
-        ServiceResponse<dynamic> UpdateExercise(UpdateExerciseModel exercise);
         ServiceResponse<dynamic> GetExerciseById(Guid id);
+        ServiceResponse<dynamic> AddExercise(ExerciseModel exercise);
+        ServiceResponse<dynamic> UpdateExercise(ExerciseModel exercise);
         ServiceResponse<dynamic> DeleteExercise(Guid id);
 
     }

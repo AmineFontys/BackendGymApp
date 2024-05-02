@@ -12,18 +12,18 @@ namespace GymApp.Data.Entities
     [Table("TrainingSchedule")]
     public class TrainingSchedule
     {
-        [Key] [Required] public Guid ID { get; set; }
+        [Key] [Required] public Guid Id { get; private set; }
 
-        [ForeignKey(nameof(TrainerID))]
+        [ForeignKey(nameof(TrainerId))]
         [DeleteBehavior(DeleteBehavior.NoAction)]
-        public virtual User? Trainer { get; set; }
+        public virtual User? Trainer { get; private set; }
 
-        [Required] public Guid TrainerID { get; set; }
+        [Required] public Guid TrainerId { get; private set; }
 
-        [Required] public uint DurationInMinutes { get; set; }
+        [Required] public uint DurationInMinutes { private get; set; }
 
 
-        public virtual ICollection<Exercise?> Exercises { get; set; } = [];
+        public virtual ICollection<Exercise?> Exercises { get; private set; } = [];
 
     }
 

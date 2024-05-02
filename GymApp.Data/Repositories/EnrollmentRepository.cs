@@ -12,49 +12,12 @@ namespace GymApp.Data.Repositories
     public class EnrollmentRepository : IEnrollmentRepository
     {
         private readonly ITrainingContext _trainingContext;
+        private readonly IRepository _repository;
 
-        public EnrollmentRepository(ITrainingContext trainingContext)
+        public EnrollmentRepository(ITrainingContext trainingContext, IRepository repository)
         {
             _trainingContext = trainingContext;
-        }
-
-        private static RepositoryResponse<dynamic> CreateResponse(bool success, dynamic? data, string? message = null) => new RepositoryResponse<dynamic> { Success = success, Data = data, Message = message };
-
-
-        private static RepositoryResponse<dynamic> HandleException(Exception ex) => CreateResponse(false, ex, ex.Message);
-
-
-        public RepositoryResponse<dynamic> AddEnrollment(Enrollment enrollment)
-        {
-            try
-            {
-                _trainingContext.Enrollments.Add(enrollment);
-                _trainingContext.SaveChanges();
-                return CreateResponse(true, enrollment);
-            }
-            catch (Exception ex)
-            {
-                return HandleException(ex);
-            }
-        }
-
-        public RepositoryResponse<dynamic> DeleteEnrollment(Guid id)
-        {
-            try
-            {
-                var enrollment = _trainingContext.Enrollments.Find(id);
-                if (enrollment == null)
-                {
-                    return CreateResponse(false, null, "Enrollment not found");
-                }
-                _trainingContext.Enrollments.Remove(enrollment);
-                _trainingContext.SaveChanges();
-                return CreateResponse(true, enrollment);
-            }
-            catch (Exception ex)
-            {
-                return HandleException(ex);
-            }
+            _repository = repository;
         }
 
         public RepositoryResponse<dynamic> GetAllEnrollments()
@@ -62,11 +25,11 @@ namespace GymApp.Data.Repositories
             try
             {
                 var enrollments = _trainingContext.Enrollments.ToList();
-                return CreateResponse(true, enrollments);
+                return _repository.CreateResponse(true, enrollments);
             }
             catch (Exception ex)
             {
-                return HandleException(ex);
+                return _repository.HandleException(ex);
             }
         }
 
@@ -77,28 +40,64 @@ namespace GymApp.Data.Repositories
                 var enrollment = _trainingContext.Enrollments.Find(id);
                 if (enrollment == null)
                 {
-                    return CreateResponse(false, null, "Enrollment not found");
+                    return _repository.CreateResponse(false, null, "Enrollment not found");
                 }
-                return CreateResponse(true, enrollment);
+                return _repository.CreateResponse(true, enrollment);
             }
             catch (Exception ex)
             {
-                return HandleException(ex);
+                return _repository.HandleException(ex);
             }
         }
-
+        public RepositoryResponse<dynamic> AddEnrollment(Enrollment enrollment)
+        {
+            try
+            {
+                _trainingContext.Enrollments.Add(enrollment);
+                _trainingContext.SaveChanges();
+                return _repository.CreateResponse(true, enrollment);
+            }
+            catch (Exception ex)
+            {
+                return _repository.HandleException(ex);
+            }
+        }
         public RepositoryResponse<dynamic> UpdateEnrollment(Enrollment enrollment)
         {
             try
             {
                 _trainingContext.Enrollments.Update(enrollment);
                 _trainingContext.SaveChanges();
-                return CreateResponse(true, enrollment);
+                return _repository.CreateResponse(true, enrollment);
             }
             catch (Exception ex)
             {
-                return HandleException(ex);
+                return _repository.HandleException(ex);
             }
         }
+        public RepositoryResponse<dynamic> DeleteEnrollment(Guid id)
+        {
+            try
+            {
+                var enrollment = _trainingContext.Enrollments.Find(id);
+                if (enrollment == null)
+                {
+                    return _repository.CreateResponse(false, null, "Enrollment not found");
+                }
+                _trainingContext.Enrollments.Remove(enrollment);
+                _trainingContext.SaveChanges();
+                return _repository.CreateResponse(true, enrollment);
+            }
+            catch (Exception ex)
+            {
+                return _repository.HandleException(ex);
+            }
+        }
+
+        
+
+        
+
+        
     }
 }
