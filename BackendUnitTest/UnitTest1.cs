@@ -71,7 +71,7 @@ namespace GymAppTraining.Api.Tests.Services
             var result = _exerciseService.AddExercise(exercise);
 
             // Assert
-            Assert.AreEqual(serviceResponse, result);
+            Assert.That(result, Is.EqualTo(serviceResponse));
         }
     }
 }
