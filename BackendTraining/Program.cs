@@ -73,6 +73,8 @@ namespace BackendTraining
             builder.Services.AddScoped<TrainingScheduleRepository>();
             builder.Services.AddScoped<ITrainingScheduleRepository, TrainingScheduleRepository>();
             builder.Services.AddScoped<ITrainingScheduleService, TrainingScheduleService>();
+            builder.Services.AddScoped<IRepository, Repository>();
+            builder.Services.AddScoped<IService, Service>();
 
 
 

@@ -71,17 +71,25 @@ namespace GymApp.Data.Repositories
             }
         }
 
-        
 
-        
+
+
 
         public RepositoryResponse<dynamic> UpdateExercise(Exercise exercise)
         {
             try
             {
-                _trainingContext.Exercises.Update(exercise);
+                
+                var existingExercise = _trainingContext.Exercises.Find(exercise.Id);
+                if (existingExercise == null)
+                {
+                    return _repository.CreateResponse(false, null, "Exercise not found");
+                }
+
+                _trainingContext.Entry(existingExercise).CurrentValues.SetValues(exercise);
                 _trainingContext.SaveChanges();
-                return _repository.CreateResponse(true, exercise);
+
+                return _repository.CreateResponse(true, exercise, "Exercise updated successfully");
             }
             catch (Exception ex)
             {
@@ -99,7 +107,7 @@ namespace GymApp.Data.Repositories
                 }
                 _trainingContext.Exercises.Remove(exercise);
                 _trainingContext.SaveChanges();
-                return _repository.CreateResponse(true, exercise);
+                return _repository.CreateResponse(true, exercise, "Exercise deleted successfully");
             }
             catch (Exception ex)
             {
