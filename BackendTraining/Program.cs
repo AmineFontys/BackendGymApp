@@ -15,9 +15,7 @@ namespace BackendTraining
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables()
-            .Build();
-
-            
+                .Build();
 
             var builder = WebApplication.CreateBuilder(args);
 
@@ -25,11 +23,21 @@ namespace BackendTraining
             builder.Services.AddDbContext<TrainingContext>(options => options.UseSqlServer(configuration.GetConnectionString("Default")));
 
             builder.Services.AddControllers();
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                {
+                    builder
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowAnyOrigin();  // testing only
+                      //.WithOrigins("http://localhost:4200") 
+                        //.AllowCredentials();
+                });
+            });
 
-            //builder.Services.AddControllers().AddJsonOptions(options =>
-            //{
-            //    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-            //});
+            builder.Services.AddSignalR();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -45,10 +53,17 @@ namespace BackendTraining
 
             app.UseHttpsRedirection();
 
+            app.UseRouting();
+
             app.UseAuthorization();
 
+            app.UseCors("CorsPolicy");
 
-            app.MapControllers();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHub<MyHub>("/myHub");
+            });
 
             app.Run();
         }
@@ -75,11 +90,6 @@ namespace BackendTraining
             builder.Services.AddScoped<ITrainingScheduleService, TrainingScheduleService>();
             builder.Services.AddScoped<IRepository, Repository>();
             builder.Services.AddScoped<IService, Service>();
-
-
-
-
-
         }
     }
 }

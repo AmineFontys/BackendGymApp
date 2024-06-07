@@ -3,6 +3,7 @@ using GymApp.Data.Entities;
 using GymApp.Data.Repositories;
 using GymAppTraining.Api.Models;
 using GymAppTraining.Api.Services;
+using static GymApp.Data.Entities.User;
 
 namespace GymAppTraining.Api
 {
@@ -11,8 +12,11 @@ namespace GymAppTraining.Api
         
         public MappingProfiles()
         {
-            CreateMap<User, UserModel>();
-            CreateMap<UserModel, User>();
+            CreateMap<User, UserModel>()
+            .ForMember(dest => dest.Role, opt => opt.MapFrom(src => (uint)src.Role));
+            CreateMap<UserModel, User>()
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => (UserRole)src.Role));
+
             CreateMap<Training, TrainingModel>();
             CreateMap<TrainingModel, Training>();
             CreateMap<TrainingSchedule, TrainingScheduleModel>();

@@ -31,6 +31,6 @@ namespace GymApp.Data.Entities
         [Required] public uint MaxParticipants { get; set; }
 
         public uint CurrentParticipants { get; set; }
-
+        
     }
 }

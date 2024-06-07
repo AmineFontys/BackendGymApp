@@ -14,7 +14,6 @@ namespace BackendDiet
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSingleton<WebSocketHandler>();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
@@ -31,21 +30,7 @@ namespace BackendDiet
                                  .AllowAnyMethod()
                                  .AllowAnyHeader();
             });
-            app.UseWebSockets();
-
-            app.Use(async (context, next) =>
-            {
-                if (context.Request.Path == "/ws" && context.WebSockets.IsWebSocketRequest)
-                {
-                    var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                    var webSocketHandler = context.RequestServices.GetRequiredService<WebSocketHandler>();
-                    await webSocketHandler.HandleWebSocketAsync(context, webSocket);
-                }
-                else
-                {
-                    await next();
-                }
-            });
+           
 
 
 

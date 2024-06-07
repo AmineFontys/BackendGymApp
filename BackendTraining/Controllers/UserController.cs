@@ -18,7 +18,6 @@ namespace GymAppTraining.Api.Controllers
         }
 
 
-
         [HttpGet]
         public IActionResult GetAllUsers() => HandleResponse(_iuserService.GetAllUsers());
         [HttpGet("{id}")]
