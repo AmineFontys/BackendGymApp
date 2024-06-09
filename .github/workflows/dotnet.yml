@@ -50,4 +50,4 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: aminefontys/GymAppTraining.Api_1:latest
+        tags: aminefontys/gymapptraining.api_1:latest
