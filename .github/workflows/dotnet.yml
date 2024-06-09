@@ -48,7 +48,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         context: .
-        file: ./Dockerfile
+        file: ./BackendGymApp/BackendTraining/Dockerfile
         push: true
         tags: aminefontys/gymapptrainingapi:dev
 
