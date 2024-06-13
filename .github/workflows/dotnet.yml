@@ -45,10 +45,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - name: Training API
-            context: ./BackendTraining
-            dockerfile: Dockerfile
-            tag: aminefontys/gymapptrainingapi:latest
           - name: Diet API
             context: ./BackendDiet
             dockerfile: Dockerfile
