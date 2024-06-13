@@ -8,34 +8,42 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: '6.0.x'
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
     - name: Test
       run: dotnet test --no-build --verbosity normal
-      
+
   docker:
-    needs: build
+    needs: test
     runs-on: ubuntu-latest
     strategy:
       matrix:
         include:
           - name: Training API
             dockerfile: ./BackendTraining/Dockerfile
-            tag: aminefontys/gymapptrainingapi:latest
+            tag: aminefontys/gymapptrainingapi:dev
           - name: Diet API
             dockerfile: ./BackendDiet/Dockerfile
-            tag: aminefontys/gymappdietapi:latest
+            tag: aminefontys/gymappdietapi:dev
 
     steps:
     - uses: actions/checkout@v4
