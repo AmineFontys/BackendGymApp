@@ -44,11 +44,19 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build and push Docker image
+    - name: Build and push Training Api Docker image
       uses: docker/build-push-action@v3
       with:
         context: .
         file: ./BackendTraining/Dockerfile
         push: true
         tags: aminefontys/gymapptrainingapi:dev
+        
+    - name: Build and push Diet Api Docker image
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        file: ./BackendDiet/Dockerfile
+        push: true
+        tags: aminefontys/gymappdietapi:dev
 
