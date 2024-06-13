@@ -8,7 +8,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copy csproj and restore as distinct layers
+# Copy csproj
 COPY ["BackendTraining/GymAppTraining.Api.csproj", "BackendTraining/"]
 COPY ["GymApp.Data/GymApp.Data.csproj", "GymApp.Data/"]
 
