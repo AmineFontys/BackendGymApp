@@ -11,8 +11,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    outputs:
-      cache-hit: ${{ steps.cache-nuget.outputs.cache-hit }}
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -20,7 +18,6 @@ jobs:
       with:
         dotnet-version: '6.0.x'
     - name: Cache NuGet Packages
-      id: cache-nuget
       uses: actions/cache@v3
       with:
         path: ~/.nuget/packages
@@ -29,8 +26,6 @@ jobs:
           ${{ runner.os }}-nuget-
     - name: Restore dependencies
       run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
 
   test:
     needs: build
@@ -41,12 +36,6 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '6.0.x'
-    - name: Cache NuGet Packages
-      id: cache-nuget
-      uses: actions/cache@v3
-      with:
-        path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/packages.lock.json') }}
     - name: Test
       run: dotnet test --verbosity normal
 

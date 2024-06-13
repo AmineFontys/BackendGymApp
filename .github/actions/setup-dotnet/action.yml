@@ -1,0 +1,26 @@
+name: 'Setup .NET with Cache'
+description: 'Set up .NET SDK and cache NuGet packages.'
+inputs:
+  dotnet-version:
+    description: '.NET SDK version to use.'
+    required: true
+  cache-key:
+    description: 'Cache key for NuGet packages.'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ inputs.dotnet-version }}
+
+    - name: Cache NuGet Packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ inputs.cache-key }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
