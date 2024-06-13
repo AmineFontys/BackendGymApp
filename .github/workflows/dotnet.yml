@@ -46,10 +46,12 @@ jobs:
       matrix:
         include:
           - name: Training API
-            dockerfile: ./BackendTraining/Dockerfile
+            context: ./BackendTraining
+            dockerfile: Dockerfile
             tag: aminefontys/gymapptrainingapi:latest
           - name: Diet API
-            dockerfile: ./BackendDiet/Dockerfile
+            context: ./BackendDiet
+            dockerfile: Dockerfile
             tag: aminefontys/gymappdietapi:latest
           
 
@@ -65,7 +67,7 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v3
       with:
-        context: .
-        file: ${{ matrix.dockerfile }}
+        context: ${{ matrix.context }}
+        file: ${{ matrix.context }}/${{ matrix.dockerfile }}
         push: true
         tags: ${{ matrix.tag }}
