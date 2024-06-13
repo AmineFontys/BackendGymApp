@@ -47,10 +47,10 @@ jobs:
         include:
           - name: Training API
             dockerfile: ./BackendTraining/Dockerfile
-            tag: aminefontys/gymapptrainingapi:dev
+            tag: aminefontys/gymapptrainingapi:latest
           - name: Diet API
             dockerfile: ./BackendDiet/Dockerfile
-            tag: aminefontys/gymappdietapi:dev
+            tag: aminefontys/gymappdietapi:latest
 
     steps:
     - uses: actions/checkout@v4
