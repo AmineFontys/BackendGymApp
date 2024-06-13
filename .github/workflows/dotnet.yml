@@ -3,12 +3,16 @@ name: .NET with Docker
 on:
   push:
     branches: [ "master" ]
+    paths-ignore:
+      - '**/*.md'
   pull_request:
     branches: [ "master" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      cache-hit: ${{ steps.cache-nuget.outputs.cache-hit }}
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -16,10 +20,11 @@ jobs:
       with:
         dotnet-version: '6.0.x'
     - name: Cache NuGet Packages
+      id: cache-nuget
       uses: actions/cache@v3
       with:
         path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/packages.lock.json') }}
         restore-keys: |
           ${{ runner.os }}-nuget-
     - name: Restore dependencies
@@ -32,11 +37,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
     - name: Cache NuGet Packages
+      id: cache-nuget
       uses: actions/cache@v3
       with:
         path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/packages.lock.json') }}
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
