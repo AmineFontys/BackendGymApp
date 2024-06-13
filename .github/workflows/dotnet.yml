@@ -48,6 +48,9 @@ jobs:
           - name: Training API
             dockerfile: ./BackendTraining/Dockerfile
             tag: aminefontys/gymapptrainingapi:latest
+          - name: Diet API
+            dockerfile: ./BackendDiet/Dockerfile
+            tag: aminefontys/gymappdietapi:latest
           
 
     steps:
